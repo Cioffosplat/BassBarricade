@@ -261,9 +261,13 @@ footer {
     box-sizing: border-box;
     display: flex;
     align-items: center;
-    box-shadow: 0 0 40px rgba(0, 0, 0, 0.3);
-    border-radius: 25px;
+    border-radius: 15px;
     margin-bottom: 5px;
+    -webkit-text-stroke: 3px black;
+    position: relative;
+    font-family: 'Delicious Handrawn', cursive;
+    font-size: 46px;
+    color : gold;
 }
 
 /* style the images */
@@ -272,5 +276,16 @@ footer {
     width: auto; /* let the width adjust automatically */
     display: inline-block;
     margin-right: 10px;
+}
+
+.arrowButton{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding-top: 15px;
+}
+.socials{
+    display: none;
+    margin-top: 9px;
 }
 

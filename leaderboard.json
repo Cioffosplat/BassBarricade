@@ -4,6 +4,11 @@
       "id": 1,
       "name": "Fioccosplat",
       "score": 9001
+    },
+    {
+      "name": "abc",
+      "score": 0,
+      "id": 2
     }
   ]
 }

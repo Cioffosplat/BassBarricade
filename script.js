@@ -126,7 +126,7 @@ function handleProjectiles(){ //handles all the individual projectiles
 //DEFENDER development here:
 //defender sprites and animations
 const defender1 = new Image();
-defender1.src = 'sprites&assets/plant.png';
+defender1.src = 'sprites&assets/bass.png';
 
 //defender movement and logic
 class Defender{
@@ -140,11 +140,11 @@ class Defender{
         this.projectiles = []; // used to store the specific projectile used by the defender
         this.timer = 0; //defines the "shooting rate" of the defender
         this.frameX = 0;
-        this.frameY = 0;
-        this.spriteWidth = 167;
-        this.spriteHeight = 243;
+        this.frameY = 0; // variable used in case of a multi line sprite sheet
+        this.spriteWidth = 100;
+        this.spriteHeight = 100;
         this.minFrame = 0;
-        this.maxFrame = 1;
+        this.maxFrame = 0;
     }
     draw(){ // draw method to actually draw the defender : )
         //ctx.fillStyle = 'purple'; //this was the old hit-box representation
@@ -237,8 +237,8 @@ enemySprites.push(enemy1);
 
 //Implementation ready for multiple enemies
 //const enemy2 = new Image();
-//enemy2.src = 'sprites&assets/enemy/Flying-Enemy/eye monster idle.png';
-//enemyTypes.push(enemy2);
+//enemy2.src = 'sprites&assets/BassIcon.png';
+//enemySprites.push(enemy2);
 
 //enemy movement and logic:
 class Enemy  {
@@ -460,7 +460,6 @@ retryButton.addEventListener('click', () => {
     //Used to add the player to the "hypothetical" leaderboard
     addEntry();
 });
-submitButton.addEventListener('click', addEntry);
 
 //Method used to correctly handle the resize function of the web window
 window.addEventListener('resize', function(){
@@ -557,6 +556,20 @@ function addEntry() {
             window.location.reload()
         })
         .catch(error => console.error(error));
+}
+//Function make to make the arrow in the bottom left of the screen work correctly
+function menu2(){
+    let menu2 = document.getElementsByClassName("socials");
+    if (menu2[0].style.display === "none" || menu2[0].style.display === "") {
+        for(let i = 0; i < menu2.length; i++){
+            menu2[i].style.display = "inline-block";
+        }
+    } else {
+        for(let i = 0; i < menu2.length; i++){
+            menu2[i].style.display = "none";
+
+        }
+    }
 }
 
 
