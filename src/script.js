@@ -79,16 +79,19 @@ class Defender{
         ctx.fillStyle = 'purple';
         ctx.fillRect(this.x, this.y, this.width, this.height);
         ctx.fillStyle = 'gold';
-        ctx.font = '20px Arial';
-        ctx.fillText(Math.floor(this.health),this.x,this.y);
+        ctx.font = '30px Arial';
+        ctx.fillText(Math.floor(this.health),this.x + 25,this.y + 30);
     }
 }
 canvas.addEventListener('click', function (){ // function that is used to manage the defender
     const gridPositionX = mouse.x - (mouse.x % cellSize);
     const gridPositionY = mouse.y - (mouse.y % cellSize);
     if (gridPositionY < cellSize) return; // used to avoid placing defenders on the top selection bar
+    for (let i = 0; i < defenders.length; i++){ //small check to check if there are already any defenders on the chosen position
+        if (defenders[i].x === gridPositionX && defenders[i].y === gridPositionY) return;
+    }
     let defenderCost = 100;
-    if (numberOfResources > defenderCost){ //if the player has enough money then he can place the defender!
+    if (numberOfResources >= defenderCost){ //if the player has enough money then he can place the defender!
         defenders.push(new Defender(gridPositionX,gridPositionY));
         numberOfResources -= defenderCost;
     }
@@ -101,12 +104,18 @@ function handleDefenders(){
 //ENEMIES development here:
 //RESOURCES development here:
 //UTILITIES development here:
+function handleGameStatus(){ // small method to display the available resources on the top bar of the canvas
+    ctx.fillStyle = 'gold';
+    ctx.font = '30px Arial';
+    ctx.fillText('Resources: ' + numberOfResources,20,55);
+}
 function animate(){ //function used to "re-draw" the element of the canvas making it seem "animated"
     ctx.clearRect(0,0, canvas.width,canvas.height); // method used to "clear up" the unnecessary stuff that constantly gets drawn
-    ctx.fillStyle = 'blue';
+    ctx.fillStyle = 'purple';
     ctx.fillRect(0,0,controlsBar.width,controlsBar.height);
     handleGameGrid();
     handleDefenders();
+    handleGameStatus();
     requestAnimationFrame(animate); // method used to create an animation "loop" effect using recursion : )
 }
 animate();
