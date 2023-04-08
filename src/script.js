@@ -7,10 +7,13 @@ canvas.height = 600; // *** AJUST TO FIT ON THE SIDE OF THE SCREEN ***
 //global variables (just to make it a littile bit easier to read) will be declared here:
 const cellSize = 100;
 const cellGap = 3;
+
 const gameGrid = []; //array used to store the canvas "cells" information and objects
 const defenders = []; //array used to store all the current defenders
 const enemies = []; //array used to store all the current enemies on the grid
 const enemyPositions = []; //array used to store the current positions of the enemies
+const projectiles = []; //array used to store the various projectiles
+
 let enemiesInterval = 600; //variable used to control the "flow" of the enemies
 let numberOfResources = 300;
 let frame = 0;
@@ -68,6 +71,42 @@ function handleGameGrid(){ //very simple function to draw the individual cells f
     }
 }
 //PROJECTILE development here:
+class Projectile{
+    constructor(x,y) {
+        this.x = x;
+        this.y = y;
+        this.width = 10;
+        this.height = 10;
+        this.power = 10; //determines the power of the projectile, so how much damage it inflicts
+        this.speed = 5; //speed at which the projectile runs
+    }
+    update(){
+        this.x += this.speed;
+    }
+    draw(){ //FOR NOW it draws a small circle for the projectile
+        ctx.fillStyle = 'black';
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.width,0,Math.PI * 2);
+        ctx.fill();
+    }
+}
+function handleProjectiles(){ //handles all the individual projectiles
+    for (let i = 0; i < projectiles.length; i++){
+        projectiles[i].update();
+        projectiles[i].draw();
+
+        for(let j = 0; j < enemies.length; j++){ //projectile damage is handled here
+            if (enemies[j] && projectiles[i] && collision(projectiles[i], enemies[j])){
+                enemies[j].health -= projectiles[i].power;
+            }
+        }
+
+        if (projectiles[i] && projectiles[i].x > canvas.width -cellSize){ //this control prevents the projectiles from hitting the enemies where they spawn by limiting the projectile range
+            projectiles.splice(i,1);
+            i--;
+        }
+    }
+}
 //DEFENDER development here:
 class Defender{
     constructor(x,y) { //just like a java constructor wow!
@@ -87,6 +126,12 @@ class Defender{
         ctx.font = '30px Delicious Handrawn';
         ctx.fillText(Math.floor(this.health),this.x + 25,this.y + 30);
     }
+    update(){ //method for the projectile shooting
+        this.timer++;
+        if(this.timer % 100 === 0){ // timer used to shoot constantly the projectiles, modify this to change the FIRE RATE
+            projectiles.push(new Projectile(this.x + 70,this.y + 50));
+        }
+    }
 }
 canvas.addEventListener('click', function (){ // function that is used to manage the defender
     const gridPositionX = mouse.x - (mouse.x % cellSize);
@@ -104,8 +149,9 @@ canvas.addEventListener('click', function (){ // function that is used to manage
 function handleDefenders(){ // draws and handles the various defenders on the grid
     for(let i = 0; i < defenders.length; i++){
         defenders[i].draw();
+        defenders[i].update();
         for (let j = 0; j < enemies.length; j++){ //check used to check if there is a collision made between the defender and the enemy
-            if(collision(defenders[i], enemies[j])){ //if the collision happens
+            if(defenders[i] && collision(defenders[i], enemies[j])){ //if the collision happens
                 enemies[j].movement = 0;
                 defenders[i].health -= 0.2; //health of the defender will be reduced
             }
@@ -173,6 +219,7 @@ function animate(){ //function used to "re-draw" the element of the canvas makin
     ctx.fillRect(0,0,controlsBar.width,controlsBar.height);
     handleGameGrid();
     handleDefenders();
+    handleProjectiles();
     handleEnemies();
     handleGameStatus();
     frame++;
