@@ -101,9 +101,20 @@ canvas.addEventListener('click', function (){ // function that is used to manage
         numberOfResources -= defenderCost;
     }
 })
-function handleDefenders(){
+function handleDefenders(){ // draws and handles the various defenders on the grid
     for(let i = 0; i < defenders.length; i++){
         defenders[i].draw();
+        for (let j = 0; j < enemies.length; j++){ //check used to check if there is a collision made between the defender and the enemy
+            if(collision(defenders[i], enemies[j])){ //if the collision happens
+                enemies[j].movement = 0;
+                defenders[i].health -= 0.2; //health of the defender will be reduced
+            }
+            if(defenders[i] && defenders[i].health <= 0){ //when the defender reaches 0 health it gets removed from the grid
+                defenders.splice(i, 1);
+                i--;
+                enemies[j].movement = enemies[j].speed; // lets the enemy continue moving at his original speed after killing the defender
+            }
+        }
     }
 }
 //ENEMIES development here:
