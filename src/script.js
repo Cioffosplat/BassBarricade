@@ -9,7 +9,10 @@ const cellSize = 100;
 const cellGap = 3;
 const gameGrid = []; //array used to store the canvas "cells" information and objects
 const defenders = []; //array used to store all the current defenders
+const enemies = []; //array used to store all the current enemies on the grid
+const enemyPositions = []; //array used to store the current positions of the enemies
 let numberOfResources = 300;
+let frame = 0;
 
 //MOUSE will be created and developed here:
 const mouse = { //mouse object used to handle the mouse movement and interaction
@@ -78,7 +81,7 @@ class Defender{
     draw(){ // draw method to actually draw the defender : )
         ctx.fillStyle = 'purple';
         ctx.fillRect(this.x, this.y, this.width, this.height);
-        ctx.fillStyle = 'gold';
+        ctx.fillStyle = 'gold'; //health display portion
         ctx.font = '30px Arial';
         ctx.fillText(Math.floor(this.health),this.x + 25,this.y + 30);
     }
@@ -102,6 +105,39 @@ function handleDefenders(){
     }
 }
 //ENEMIES development here:
+class Enemy  {
+    constructor(verticalPosition) {
+        this.x = canvas.width;
+        this.y = verticalPosition;
+        this.width = cellSize;
+        this.height = cellSize;
+        this.speed = Math.random() * 0.2 + 0.4; // attributed speed that is randomly generated for the enemy
+        this.movement = this.speed;
+        this.health = 100;
+        this.maxHealth = this.health;
+    }
+    update(){ //updates the position of the enemy
+        this.x -= this.movement;
+    }
+    draw(){
+        ctx.fillStyle = 'red';
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+        ctx.fillStyle = 'black'; //health display portion
+        ctx.font = '30px Arial';
+        ctx.fillText(Math.floor(this.health),this.x + 25,this.y + 30);
+    }
+}
+function handleEnemies(){ //method to update and handle the ememies in the grid
+    for (let i = 0; i < enemies.length; i++){
+        enemies[i].update();
+        enemies[i].draw();
+    }
+    if (frame % 100 === 0){// determines the spawn rate of each enemy
+        let verticalPosition = Math.floor(Math.random() * 5 + 1) * cellSize; //positions randomly the enemy on any given row
+        enemies.push(new Enemy(verticalPosition)); //adds a new enemy
+        enemyPositions.push(verticalPosition);
+    }
+}
 //RESOURCES development here:
 //UTILITIES development here:
 function handleGameStatus(){ // small method to display the available resources on the top bar of the canvas
@@ -115,7 +151,10 @@ function animate(){ //function used to "re-draw" the element of the canvas makin
     ctx.fillRect(0,0,controlsBar.width,controlsBar.height);
     handleGameGrid();
     handleDefenders();
+    handleEnemies();
     handleGameStatus();
+    ctx.fillText('Resources: ' + numberOfResources,20,55);
+    frame++;
     requestAnimationFrame(animate); // method used to create an animation "loop" effect using recursion : )
 }
 animate();
