@@ -11,8 +11,10 @@ const gameGrid = []; //array used to store the canvas "cells" information and ob
 const defenders = []; //array used to store all the current defenders
 const enemies = []; //array used to store all the current enemies on the grid
 const enemyPositions = []; //array used to store the current positions of the enemies
+let enemiesInterval = 600; //variable used to control the "flow" of the enemies
 let numberOfResources = 300;
 let frame = 0;
+let gameOver = false; //variable used to determine if the player has lost or not
 
 //MOUSE will be created and developed here:
 const mouse = { //mouse object used to handle the mouse movement and interaction
@@ -82,7 +84,7 @@ class Defender{
         ctx.fillStyle = 'purple';
         ctx.fillRect(this.x, this.y, this.width, this.height);
         ctx.fillStyle = 'gold'; //health display portion
-        ctx.font = '30px Arial';
+        ctx.font = '30px Delicious Handrawn';
         ctx.fillText(Math.floor(this.health),this.x + 25,this.y + 30);
     }
 }
@@ -123,7 +125,7 @@ class Enemy  {
         ctx.fillStyle = 'red';
         ctx.fillRect(this.x, this.y, this.width, this.height);
         ctx.fillStyle = 'black'; //health display portion
-        ctx.font = '30px Arial';
+        ctx.font = '30px Delicious Handrawn';
         ctx.fillText(Math.floor(this.health),this.x + 25,this.y + 30);
     }
 }
@@ -131,19 +133,28 @@ function handleEnemies(){ //method to update and handle the ememies in the grid
     for (let i = 0; i < enemies.length; i++){
         enemies[i].update();
         enemies[i].draw();
+        if(enemies[i].x < 0){ //controls whenever an enemy passes the left of the canvas, then the player has lost the game
+            gameOver = true;
+        }
     }
-    if (frame % 100 === 0){// determines the spawn rate of each enemy
+    if (frame % enemiesInterval === 0){// determines the spawn rate of each enemy
         let verticalPosition = Math.floor(Math.random() * 5 + 1) * cellSize; //positions randomly the enemy on any given row
         enemies.push(new Enemy(verticalPosition)); //adds a new enemy
         enemyPositions.push(verticalPosition);
+        if (enemiesInterval > 120) enemiesInterval -= 50; //shortens the flow-rate used mainly to control the games DIFFICULTY
     }
 }
 //RESOURCES development here:
 //UTILITIES development here:
 function handleGameStatus(){ // small method to display the available resources on the top bar of the canvas
     ctx.fillStyle = 'gold';
-    ctx.font = '30px Arial';
+    ctx.font = '30px Delicious Handrawn';
     ctx.fillText('Resources: ' + numberOfResources,20,55);
+    if(gameOver){ //method to display the Game Over Screen at the end of the game!
+        ctx.fillStyle = 'black';
+        ctx.font = '120px Delicious Handrawn';
+        ctx.fillText('GAME OVER', 220, 360);
+    }
 }
 function animate(){ //function used to "re-draw" the element of the canvas making it seem "animated"
     ctx.clearRect(0,0, canvas.width,canvas.height); // method used to "clear up" the unnecessary stuff that constantly gets drawn
@@ -153,9 +164,8 @@ function animate(){ //function used to "re-draw" the element of the canvas makin
     handleDefenders();
     handleEnemies();
     handleGameStatus();
-    ctx.fillText('Resources: ' + numberOfResources,20,55);
     frame++;
-    requestAnimationFrame(animate); // method used to create an animation "loop" effect using recursion : )
+    if (!gameOver) requestAnimationFrame(animate); // method used to create an animation "loop" effect using recursion : )
 }
 animate();
 
