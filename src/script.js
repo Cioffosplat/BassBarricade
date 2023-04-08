@@ -130,9 +130,13 @@ class Defender{
         ctx.fillText(Math.floor(this.health),this.x + 25,this.y + 30);
     }
     update(){ //method for the projectile shooting
-        this.timer++;
-        if(this.timer % 100 === 0){ // timer used to shoot constantly the projectiles, modify this to change the FIRE RATE
-            projectiles.push(new Projectile(this.x + 70,this.y + 50));
+        if(this.shooting){
+            this.timer++;
+            if(this.timer % 100 === 0){ // timer used to shoot constantly the projectiles, modify this to change the FIRE RATE
+                projectiles.push(new Projectile(this.x + 70,this.y + 50));
+            }
+        } else {
+            this.timer = 0;
         }
     }
 }
@@ -200,6 +204,8 @@ function handleEnemies(){ //method to update and handle the ememies in the grid
             let gainedResources = enemies[i].maxHealth/10; // used to give back to the player resources according to the damage inflicted
             numberOfResources += gainedResources;
             score += gainedResources;
+            const findThisIndex = enemyPositions.indexOf(enemies[i].y);
+            enemyPositions.splice(findThisIndex,1);
             enemies.splice(i,1);
             i--;
         }
