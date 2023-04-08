@@ -16,6 +16,7 @@ const projectiles = []; //array used to store the various projectiles
 
 let enemiesInterval = 600; //variable used to control the "flow" of the enemies
 let numberOfResources = 300;
+let score = 0;
 let frame = 0;
 let gameOver = false; //variable used to determine if the player has lost or not
 
@@ -98,6 +99,8 @@ function handleProjectiles(){ //handles all the individual projectiles
         for(let j = 0; j < enemies.length; j++){ //projectile damage is handled here
             if (enemies[j] && projectiles[i] && collision(projectiles[i], enemies[j])){
                 enemies[j].health -= projectiles[i].power;
+                projectiles.splice(i,1);
+                i--;
             }
         }
 
@@ -170,7 +173,7 @@ class Enemy  {
         this.y = verticalPosition;
         this.width = cellSize;
         this.height = cellSize;
-        this.speed = Math.random() * 0.2 + 0.4; // attributed speed that is randomly generated for the enemy
+        this.speed = Math.random() * 0.2 + 0.2; // attributed speed that is randomly generated for the enemy
         this.movement = this.speed;
         this.health = 100;
         this.maxHealth = this.health;
@@ -193,6 +196,13 @@ function handleEnemies(){ //method to update and handle the ememies in the grid
         if(enemies[i].x < 0){ //controls whenever an enemy passes the left of the canvas, then the player has lost the game
             gameOver = true;
         }
+        if(enemies[i].health <= 0){//checks if the enemy's health is equal to 0, then it removes it from the grid
+            let gainedResources = enemies[i].maxHealth/10; // used to give back to the player resources according to the damage inflicted
+            numberOfResources += gainedResources;
+            score += gainedResources;
+            enemies.splice(i,1);
+            i--;
+        }
     }
     if (frame % enemiesInterval === 0){// determines the spawn rate of each enemy
         let verticalPosition = Math.floor(Math.random() * 5 + 1) * cellSize; //positions randomly the enemy on any given row
@@ -206,7 +216,8 @@ function handleEnemies(){ //method to update and handle the ememies in the grid
 function handleGameStatus(){ // small method to display the available resources on the top bar of the canvas
     ctx.fillStyle = 'gold';
     ctx.font = '30px Delicious Handrawn';
-    ctx.fillText('Resources: ' + numberOfResources,20,55);
+    ctx.fillText('Score: ' + score,20,40);
+    ctx.fillText('Resources: ' + numberOfResources,20,80);
     if(gameOver){ //method to display the Game Over Screen at the end of the game!
         ctx.fillStyle = 'black';
         ctx.font = '120px Delicious Handrawn';
