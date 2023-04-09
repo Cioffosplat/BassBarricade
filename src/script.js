@@ -14,7 +14,7 @@ const enemies = []; //array used to store all the current enemies on the grid
 const enemyPositions = []; //array used to store the current positions of the enemies
 const projectiles = []; //array used to store the various projectiles
 const resources = []; //array used to store all the resources
-const winningScore = 50; //winning score used to let the game finish whenever the player gets to that value
+const winningScore = 10; //winning score used to let the game finish whenever the player gets to that value
 
 let enemiesInterval = 600; //variable used to control the "flow" of the enemies
 let numberOfResources = 300;
@@ -182,9 +182,9 @@ class Enemy  {
     constructor(verticalPosition) {
         this.x = canvas.width;
         this.y = verticalPosition;
-        this.width = cellSize;
-        this.height = cellSize;
-        this.speed = Math.random() * 0.2 + 0.2; // attributed speed that is randomly generated for the enemy
+        this.width = cellSize - cellGap * 2;
+        this.height = cellSize - cellGap * 2;
+        this.speed = Math.random() * 0.2 + 0.6; // attributed speed that is randomly generated for the enemy
         this.movement = this.speed;
         this.health = 100;
         this.maxHealth = this.health;
@@ -218,7 +218,7 @@ function handleEnemies(){ //method to update and handle the ememies in the grid
         }
     }
     if (frame % enemiesInterval === 0 && score < winningScore){// determines the spawn rate of each enemy
-        let verticalPosition = Math.floor(Math.random() * 5 + 1) * cellSize; //positions randomly the enemy on any given row
+        let verticalPosition = Math.floor(Math.random() * 5 + 1) * cellSize + cellGap; //positions randomly the enemy on any given row
         enemies.push(new Enemy(verticalPosition)); //adds a new enemy
         enemyPositions.push(verticalPosition);
         if (enemiesInterval > 120) enemiesInterval -= 50; //shortens the flow-rate used mainly to control the games DIFFICULTY
@@ -266,6 +266,13 @@ function handleGameStatus(){ // small method to display the available resources 
         ctx.font = '120px Delicious Handrawn';
         ctx.fillText('GAME OVER', 220, 360);
     }
+    if (score >= winningScore && enemies.length === 0){ //controls if the player has actually got the winning score
+        ctx.fillStyle = 'black';
+        ctx.font = '60px Delicious Handrawn';
+        ctx.fillText('LEVEL COMPLETE', 260,320);
+        ctx.font = '30px Delicious Handrawn';
+        ctx.fillText('You win with ' + score + 'points', 264,360);
+    }
 }
 function animate(){ //function used to "re-draw" the element of the canvas making it seem "animated"
     ctx.clearRect(0,0, canvas.width,canvas.height); // method used to "clear up" the unnecessary stuff that constantly gets drawn
@@ -291,3 +298,7 @@ function collision (first, second){//method used to make two objects collide
         return true;
     }
 }
+
+window.addEventListener('resize', function(){ //method used to correctly handle the resize function of the web window
+    canvasPosition = canvas.getBoundingClientRect();
+})
