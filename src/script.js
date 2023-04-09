@@ -13,6 +13,8 @@ const defenders = []; //array used to store all the current defenders
 const enemies = []; //array used to store all the current enemies on the grid
 const enemyPositions = []; //array used to store the current positions of the enemies
 const projectiles = []; //array used to store the various projectiles
+const resources = []; //array used to store all the resources
+const winningScore = 50; //winning score used to let the game finish whenever the player gets to that value
 
 let enemiesInterval = 600; //variable used to control the "flow" of the enemies
 let numberOfResources = 300;
@@ -78,7 +80,7 @@ class Projectile{
         this.y = y;
         this.width = 10;
         this.height = 10;
-        this.power = 10; //determines the power of the projectile, so how much damage it inflicts
+        this.power = 20; //determines the power of the projectile, so how much damage it inflicts
         this.speed = 5; //speed at which the projectile runs
     }
     update(){
@@ -115,8 +117,8 @@ class Defender{
     constructor(x,y) { //just like a java constructor wow!
         this.x = x;
         this.y = y;
-        this.width = cellSize;
-        this.height = cellSize;
+        this.width = cellSize - cellGap * 2;
+        this.height = cellSize - cellGap * 2;
         this.shooting = false; //shooting used when an enemy is detected
         this.health = 100; //defender's health
         this.projectiles = []; // used to store the specific projectile used by the defender
@@ -141,8 +143,8 @@ class Defender{
     }
 }
 canvas.addEventListener('click', function (){ // function that is used to manage the defender
-    const gridPositionX = mouse.x - (mouse.x % cellSize);
-    const gridPositionY = mouse.y - (mouse.y % cellSize);
+    const gridPositionX = mouse.x - (mouse.x % cellSize) + cellGap;
+    const gridPositionY = mouse.y - (mouse.y % cellSize) + cellGap;
     if (gridPositionY < cellSize) return; // used to avoid placing defenders on the top selection bar
     for (let i = 0; i < defenders.length; i++){ //small check to check if there are already any defenders on the chosen position
         if (defenders[i].x === gridPositionX && defenders[i].y === gridPositionY) return;
@@ -157,6 +159,11 @@ function handleDefenders(){ // draws and handles the various defenders on the gr
     for(let i = 0; i < defenders.length; i++){
         defenders[i].draw();
         defenders[i].update();
+        if (enemyPositions.indexOf(defenders[i].y) !== -1){ //check used to control the shooting ability of the defender
+            defenders[i].shooting = true;
+        } else {
+            defenders[i].shooting = false;
+        }
         for (let j = 0; j < enemies.length; j++){ //check used to check if there is a collision made between the defender and the enemy
             if(defenders[i] && collision(defenders[i], enemies[j])){ //if the collision happens
                 enemies[j].movement = 0;
@@ -210,7 +217,7 @@ function handleEnemies(){ //method to update and handle the ememies in the grid
             i--;
         }
     }
-    if (frame % enemiesInterval === 0){// determines the spawn rate of each enemy
+    if (frame % enemiesInterval === 0 && score < winningScore){// determines the spawn rate of each enemy
         let verticalPosition = Math.floor(Math.random() * 5 + 1) * cellSize; //positions randomly the enemy on any given row
         enemies.push(new Enemy(verticalPosition)); //adds a new enemy
         enemyPositions.push(verticalPosition);
@@ -218,6 +225,36 @@ function handleEnemies(){ //method to update and handle the ememies in the grid
     }
 }
 //RESOURCES development here:
+const amounts = [20,30,40]; // value used for descending resources
+class Resource{
+    constructor() {
+        this.x = Math.random() * (canvas.width - cellSize);
+        this.y = (Math.floor(Math.random() * 5) + 1) * cellSize + 25;
+        this.width = cellSize * 0.6;
+        this.height = cellSize * 0.6;
+        this.amount = amounts[Math.floor(Math.random() * amounts.length)]; // method to assign a value of the resource randomly from the array of possible
+    }
+    draw(){
+        ctx.fillStyle = 'yellow';
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+        ctx.fillStyle = 'black';
+        ctx.font = '20px Delicious Handrawn';
+        ctx.fillText(this.amount, this.x + 15, this.y + 25);
+    }
+}
+function handleResources(){ //handling of the resources
+    if(frame % 500 === 0 && score < winningScore){ // check for the winning score
+        resources.push(new Resource());
+    }
+    for(let i = 0; i < resources.length; i++){
+        resources[i].draw();
+        if(resources[i] && mouse.x && mouse.y && collision(resources[i], mouse)){
+            numberOfResources += resources[i].amount;
+            resources.splice(i, 1);
+            i--;
+        }
+    }
+}
 //UTILITIES development here:
 function handleGameStatus(){ // small method to display the available resources on the top bar of the canvas
     ctx.fillStyle = 'gold';
@@ -236,6 +273,7 @@ function animate(){ //function used to "re-draw" the element of the canvas makin
     ctx.fillRect(0,0,controlsBar.width,controlsBar.height);
     handleGameGrid();
     handleDefenders();
+    handleResources();
     handleProjectiles();
     handleEnemies();
     handleGameStatus();
