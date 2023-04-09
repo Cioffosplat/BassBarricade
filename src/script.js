@@ -14,7 +14,8 @@ const enemies = []; //array used to store all the current enemies on the grid
 const enemyPositions = []; //array used to store the current positions of the enemies
 const projectiles = []; //array used to store the various projectiles
 const resources = []; //array used to store all the resources
-const winningScore = 10; //winning score used to let the game finish whenever the player gets to that value
+const floatingMessages = []; //array used to store all the floating messages
+const winningScore = 100; //winning score used to let the game finish whenever the player gets to that value
 
 let enemiesInterval = 600; //variable used to control the "flow" of the enemies
 let numberOfResources = 300;
@@ -142,19 +143,6 @@ class Defender{
         }
     }
 }
-canvas.addEventListener('click', function (){ // function that is used to manage the defender
-    const gridPositionX = mouse.x - (mouse.x % cellSize) + cellGap;
-    const gridPositionY = mouse.y - (mouse.y % cellSize) + cellGap;
-    if (gridPositionY < cellSize) return; // used to avoid placing defenders on the top selection bar
-    for (let i = 0; i < defenders.length; i++){ //small check to check if there are already any defenders on the chosen position
-        if (defenders[i].x === gridPositionX && defenders[i].y === gridPositionY) return;
-    }
-    let defenderCost = 100;
-    if (numberOfResources >= defenderCost){ //if the player has enough money then he can place the defender!
-        defenders.push(new Defender(gridPositionX,gridPositionY));
-        numberOfResources -= defenderCost;
-    }
-})
 function handleDefenders(){ // draws and handles the various defenders on the grid
     for(let i = 0; i < defenders.length; i++){
         defenders[i].draw();
@@ -174,6 +162,40 @@ function handleDefenders(){ // draws and handles the various defenders on the gr
                 i--;
                 enemies[j].movement = enemies[j].speed; // lets the enemy continue moving at his original speed after killing the defender
             }
+        }
+    }
+}
+//FLOATING MESSAGES development here:
+class floatingMessage{ //class for every floating message type inside the game
+    constructor(value, x, y, size, color){
+        this.value = value;
+        this.x = x;
+        this.y = y;
+        this.size = size; //size of the text
+        this.lifeSpan = 0; //determines for how much time the message should stay on screen
+        this.color = color; //color of the text
+        this.opacity = 1;
+    }
+    update(){ //used to make the message float up
+        this.y -= 0.3;
+        this.lifeSpan += 1;
+        if (this.opacity > 0.03) this.opacity -= 0.03; // used to make the text fade away
+    }
+    draw(){
+        ctx.globalAlpha = this.opacity; //sets everything that is in the canvas to 1 opacity
+        ctx.fillStyle = this.color;
+        ctx.font = this.size + 'px Delicious Handrawn'; //sets font
+        ctx.fillText(this.value, this.x, this.y); //sets the text and position
+        ctx.globalAlpha = 1; //this resets the opacity back to its original value of 1
+    }
+}
+function handleFloatingMessages(){ //it will update and remove the messages on-screen
+    for (let i = 0; i < floatingMessages.length; i++){
+        floatingMessages[i].update();
+        floatingMessages[i].draw();
+        if (floatingMessages[i].lifeSpan >= 50){ //checks and deletes whichever messages have been on screen for their lifespan
+            floatingMessages.splice(i, 1);
+            i--;
         }
     }
 }
@@ -274,6 +296,23 @@ function handleGameStatus(){ // small method to display the available resources 
         ctx.fillText('You win with ' + score + 'points', 264,360);
     }
 }
+
+canvas.addEventListener('click', function (){ // function that is used to manage the defender
+    const gridPositionX = mouse.x - (mouse.x % cellSize) + cellGap;
+    const gridPositionY = mouse.y - (mouse.y % cellSize) + cellGap;
+    if (gridPositionY < cellSize) return; // used to avoid placing defenders on the top selection bar
+    for (let i = 0; i < defenders.length; i++){ //small check to check if there are already any defenders on the chosen position
+        if (defenders[i].x === gridPositionX && defenders[i].y === gridPositionY) return;
+    }
+    let defenderCost = 100;
+    if (numberOfResources >= defenderCost){ //if the player has enough money then he can place the defender!
+        defenders.push(new Defender(gridPositionX,gridPositionY));
+        numberOfResources -= defenderCost;
+    } else{ //this displays the warning message
+        floatingMessages.push(new floatingMessage('need more resources',mouse.x,mouse.y,20,'black'));
+    }
+})
+
 function animate(){ //function used to "re-draw" the element of the canvas making it seem "animated"
     ctx.clearRect(0,0, canvas.width,canvas.height); // method used to "clear up" the unnecessary stuff that constantly gets drawn
     ctx.fillStyle = 'purple';
@@ -284,6 +323,7 @@ function animate(){ //function used to "re-draw" the element of the canvas makin
     handleProjectiles();
     handleEnemies();
     handleGameStatus();
+    handleFloatingMessages();
     frame++;
     if (!gameOver) requestAnimationFrame(animate); // method used to create an animation "loop" effect using recursion : )
 }
