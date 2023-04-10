@@ -179,7 +179,7 @@ class floatingMessage{ //class for every floating message type inside the game
     update(){ //used to make the message float up
         this.y -= 0.3;
         this.lifeSpan += 1;
-        if (this.opacity > 0.03) this.opacity -= 0.03; // used to make the text fade away
+        if (this.opacity > 0.01) this.opacity -= 0.01; // used to make the text fade away
     }
     draw(){
         ctx.globalAlpha = this.opacity; //sets everything that is in the canvas to 1 opacity
@@ -200,26 +200,52 @@ function handleFloatingMessages(){ //it will update and remove the messages on-s
     }
 }
 //ENEMIES development here:
+//ememy sprites and animations:
+const enemyTypes = [];
+const enemy1 = new Image();
+enemy1.src = 'sprites&assets/zombie.png';
+enemyTypes.push(enemy1);
+//const enemy2 = new Image();
+//enemy2.src = 'sprites&assets/enemy/Flying-Enemy/eye monster idle.png';
+//enemyTypes.push(enemy2);
+//enemy movement and logic:
 class Enemy  {
     constructor(verticalPosition) {
         this.x = canvas.width;
         this.y = verticalPosition;
         this.width = cellSize - cellGap * 2;
         this.height = cellSize - cellGap * 2;
-        this.speed = Math.random() * 0.2 + 0.6; // attributed speed that is randomly generated for the enemy
+        this.speed = Math.random() * 0.1 + 0.4; // attributed speed that is randomly generated for the enemy
         this.movement = this.speed;
         this.health = 100;
         this.maxHealth = this.health;
+        //attributes used for the animation of the enemy sprites
+        this.enemyType = enemyTypes[Math.floor(Math.random() * enemyTypes.length)];
+        this.frameX = 0;
+        this.minFrame = 0;
+        this.maxFrame = 7;
+        this.spriteWidth = 292;
+        this.spriteHeight = 410;
     }
     update(){ //updates the position of the enemy
         this.x -= this.movement;
+        //animation part of the enemy sprites
+        if (frame % 15 === 0){
+            if (this.frameX < this.maxFrame) this.frameX++;
+            else this.frameX = this.minFrame;
+        }
     }
     draw(){
-        ctx.fillStyle = 'red';
-        ctx.fillRect(this.x, this.y, this.width, this.height);
+        //ctx.fillStyle = 'red'; these were used to display rectangles instead of the sprites
+        //ctx.fillRect(this.x, this.y, this.width, this.height);
         ctx.fillStyle = 'black'; //health display portion
         ctx.font = '30px Delicious Handrawn';
         ctx.fillText(Math.floor(this.health),this.x + 25,this.y + 30);
+        // method used to draw and place images on the canvas, in this case used to draw and animate the sprites
+        // s stands for Source and d stands for Destination
+        //ctx.drawImage(img,sx,sy,sw,sh,dx,dy,dw,dh);
+        ctx.drawImage(this.enemyType,this.frameX * this.spriteWidth,0,
+            this.spriteWidth,this.spriteHeight,this.x,this.y,this.width,this.height);
     }
 }
 function handleEnemies(){ //method to update and handle the ememies in the grid
@@ -231,6 +257,8 @@ function handleEnemies(){ //method to update and handle the ememies in the grid
         }
         if(enemies[i].health <= 0){//checks if the enemy's health is equal to 0, then it removes it from the grid
             let gainedResources = enemies[i].maxHealth/10; // used to give back to the player resources according to the damage inflicted
+            floatingMessages.push(new floatingMessage('+' + gainedResources,enemies[i].x,enemies[i].y + 40,30,'red'));
+            floatingMessages.push(new floatingMessage('+' + gainedResources,160,50,30,'gold'));
             numberOfResources += gainedResources;
             score += gainedResources;
             const findThisIndex = enemyPositions.indexOf(enemies[i].y);
@@ -272,6 +300,8 @@ function handleResources(){ //handling of the resources
         resources[i].draw();
         if(resources[i] && mouse.x && mouse.y && collision(resources[i], mouse)){
             numberOfResources += resources[i].amount;
+            floatingMessages.push(new floatingMessage('+' + resources[i].amount,resources[i].x,resources[i].y,30,'black')); //messages to display the added resources
+            floatingMessages.push(new floatingMessage('+' + resources[i].amount,160,50,30,'gold'));
             resources.splice(i, 1);
             i--;
         }
