@@ -114,6 +114,11 @@ function handleProjectiles(){ //handles all the individual projectiles
     }
 }
 //DEFENDER development here:
+//defender sprites and animations
+const defender1 = new Image();
+defender1.src = 'sprites&assets/plant.png';
+
+//defender movement and logic
 class Defender{
     constructor(x,y) { //just like a java constructor wow!
         this.x = x;
@@ -124,15 +129,27 @@ class Defender{
         this.health = 100; //defender's health
         this.projectiles = []; // used to store the specific projectile used by the defender
         this.timer = 0; //defines the "shooting rate" of the defender
+        this.frameX = 0;
+        this.frameY = 0;
+        this.spriteWidth = 167;
+        this.spriteHeight = 243;
+        this.minFrame = 0;
+        this.maxFrame = 1;
     }
     draw(){ // draw method to actually draw the defender : )
-        ctx.fillStyle = 'purple';
-        ctx.fillRect(this.x, this.y, this.width, this.height);
+        //ctx.fillStyle = 'purple'; //this was the old hit-box representation
+        //ctx.fillRect(this.x, this.y, this.width, this.height);
         ctx.fillStyle = 'gold'; //health display portion
         ctx.font = '30px Delicious Handrawn';
         ctx.fillText(Math.floor(this.health),this.x + 25,this.y + 30);
+        ctx.drawImage(defender1,this.frameX * this.spriteWidth, 0,
+           this.spriteWidth, this.spriteHeight, this.x, this.y, this.width, this.height);
     }
     update(){ //method for the projectile shooting
+        if(frame % 30 === 0){
+            if (this.frameX < this.maxFrame) this.frameX++;
+            else this.frameX = this.minFrame;
+        }
         if(this.shooting){
             this.timer++;
             if(this.timer % 100 === 0){ // timer used to shoot constantly the projectiles, modify this to change the FIRE RATE
@@ -208,6 +225,7 @@ enemyTypes.push(enemy1);
 //const enemy2 = new Image();
 //enemy2.src = 'sprites&assets/enemy/Flying-Enemy/eye monster idle.png';
 //enemyTypes.push(enemy2);
+
 //enemy movement and logic:
 class Enemy  {
     constructor(verticalPosition) {
