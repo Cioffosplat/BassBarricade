@@ -15,7 +15,7 @@ const enemyPositions = []; //array used to store the current positions of the en
 const projectiles = []; //array used to store the various projectiles
 const resources = []; //array used to store all the resources
 const floatingMessages = []; //array used to store all the floating messages
-const winningScore = 100; //winning score used to let the game finish whenever the player gets to that value
+const winningScore = 1000; //winning score used to let the game finish whenever the player gets to that value
 
 let enemiesInterval = 600; //variable used to control the "flow" of the enemies
 let numberOfResources = 300;
@@ -82,7 +82,7 @@ class Projectile{
         this.width = 10;
         this.height = 10;
         this.power = 20; //determines the power of the projectile, so how much damage it inflicts
-        this.speed = 5; //speed at which the projectile runs
+        this.speed = 4; //speed at which the projectile runs
     }
     update(){
         this.x += this.speed;
@@ -139,9 +139,11 @@ class Defender{
     draw(){ // draw method to actually draw the defender : )
         //ctx.fillStyle = 'purple'; //this was the old hit-box representation
         //ctx.fillRect(this.x, this.y, this.width, this.height);
-        ctx.fillStyle = 'gold'; //health display portion
-        ctx.font = '30px Delicious Handrawn';
-        ctx.fillText(Math.floor(this.health),this.x + 25,this.y + 30);
+
+        //ctx.fillStyle = 'gold'; //health display portion
+        //ctx.font = '30px Delicious Handrawn';
+        //ctx.fillText(Math.floor(this.health),this.x + 25,this.y + 30);
+
         ctx.drawImage(defender1,this.frameX * this.spriteWidth, 0,
            this.spriteWidth, this.spriteHeight, this.x, this.y, this.width, this.height);
     }
@@ -233,9 +235,9 @@ class Enemy  {
         this.y = verticalPosition;
         this.width = cellSize - cellGap * 2;
         this.height = cellSize - cellGap * 2;
-        this.speed = Math.random() * 0.1 + 0.4; // attributed speed that is randomly generated for the enemy
+        this.speed = Math.random() * 0.1 + 0.3; // attributed speed that is randomly generated for the enemy
         this.movement = this.speed;
-        this.health = 100;
+        this.health = Math.floor(Math.random() * 300);
         this.maxHealth = this.health;
         //attributes used for the animation of the enemy sprites
         this.enemyType = enemyTypes[Math.floor(Math.random() * enemyTypes.length)];
@@ -254,11 +256,13 @@ class Enemy  {
         }
     }
     draw(){
-        //ctx.fillStyle = 'red'; these were used to display rectangles instead of the sprites
+        //ctx.fillStyle = 'red'; //these were used to display rectangles instead of the sprites
         //ctx.fillRect(this.x, this.y, this.width, this.height);
-        ctx.fillStyle = 'black'; //health display portion
-        ctx.font = '30px Delicious Handrawn';
-        ctx.fillText(Math.floor(this.health),this.x + 25,this.y + 30);
+
+        //ctx.fillStyle = 'black'; //health display portion
+        //ctx.font = '30px Delicious Handrawn';
+        //ctx.fillText(Math.floor(this.health),this.x + 25,this.y + 30);
+
         // method used to draw and place images on the canvas, in this case used to draw and animate the sprites
         // s stands for Source and d stands for Destination
         //ctx.drawImage(img,sx,sy,sw,sh,dx,dy,dw,dh);
@@ -274,7 +278,7 @@ function handleEnemies(){ //method to update and handle the ememies in the grid
             gameOver = true;
         }
         if(enemies[i].health <= 0){//checks if the enemy's health is equal to 0, then it removes it from the grid
-            let gainedResources = enemies[i].maxHealth/10; // used to give back to the player resources according to the damage inflicted
+            let gainedResources = Math.floor(enemies[i].maxHealth/10); // used to give back to the player resources according to the damage inflicted
             floatingMessages.push(new floatingMessage('+' + gainedResources,enemies[i].x,enemies[i].y + 40,30,'red'));
             floatingMessages.push(new floatingMessage('+' + gainedResources,160,50,30,'gold'));
             numberOfResources += gainedResources;
@@ -294,6 +298,8 @@ function handleEnemies(){ //method to update and handle the ememies in the grid
 }
 //RESOURCES development here:
 const amounts = [20,30,40]; // value used for descending resources
+const resource = new Image();
+resource.src = 'sprites&assets/sun60.png';
 class Resource{
     constructor() {
         this.x = Math.random() * (canvas.width - cellSize);
@@ -303,11 +309,12 @@ class Resource{
         this.amount = amounts[Math.floor(Math.random() * amounts.length)]; // method to assign a value of the resource randomly from the array of possible
     }
     draw(){
-        ctx.fillStyle = 'yellow';
-        ctx.fillRect(this.x, this.y, this.width, this.height);
+        //ctx.fillStyle = 'yellow'; //old yellow rectangle
+        //ctx.fillRect(this.x, this.y, this.width, this.height);
+        ctx.drawImage(resource, this.x, this.y,60,60);
         ctx.fillStyle = 'black';
-        ctx.font = '20px Delicious Handrawn';
-        ctx.fillText(this.amount, this.x + 15, this.y + 25);
+        ctx.font = '30px Delicious Handrawn';
+        ctx.fillText(this.amount, this.x + 60, this.y);
     }
 }
 function handleResources(){ //handling of the resources
@@ -332,7 +339,7 @@ function handleGameStatus(){ // small method to display the available resources 
     ctx.fillText('Score: ' + score,20,40);
     ctx.fillText('Resources: ' + numberOfResources,20,80);
     if(gameOver){ //method to display the Game Over Screen at the end of the game!
-        ctx.fillStyle = 'black';
+        ctx.fillStyle = 'purple';
         ctx.font = '120px Delicious Handrawn';
         ctx.fillText('GAME OVER', 220, 360);
     }
