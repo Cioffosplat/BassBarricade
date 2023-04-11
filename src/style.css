@@ -1,15 +1,31 @@
 body{
-    background: black;
+    background: linear-gradient(to bottom, #9c27b0, #673ab7);
+    background-size: 100000% 100000%;
+    animation: gradient 10s ease infinite;
 }
 
 #canvas1{
-    border: 1px solid white;
+    border: 2px solid black;
     position: absolute;
     top: 50%;
-    left: 50%;
+    left: 30%;
     transform: translate(-50%, -50%);
     width: 900px;
     height: 600px;
-    background: white;
+    background: linear-gradient(to bottom, #9c27b0, #673ab7);
+    background-size: 400% 400%;
+    animation: gradient 10s ease infinite;
     font-family: 'Delicious Handrawn', cursive;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 0%;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
 }

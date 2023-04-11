@@ -15,7 +15,7 @@ const enemyPositions = []; //array used to store the current positions of the en
 const projectiles = []; //array used to store the various projectiles
 const resources = []; //array used to store all the resources
 const floatingMessages = []; //array used to store all the floating messages
-const winningScore = 1000; //winning score used to let the game finish whenever the player gets to that value
+const winningScore = 100; //winning score used to let the game finish whenever the player gets to that value
 
 let enemiesInterval = 600; //variable used to control the "flow" of the enemies
 let numberOfResources = 300;
@@ -75,6 +75,9 @@ function handleGameGrid(){ //very simple function to draw the individual cells f
     }
 }
 //PROJECTILE development here:
+//definition of the bullet sprite
+const bullet1 = new Image();
+bullet1.src = 'sprites&assets/bullet.png';
 class Projectile{
     constructor(x,y) {
         this.x = x;
@@ -88,10 +91,11 @@ class Projectile{
         this.x += this.speed;
     }
     draw(){ //FOR NOW it draws a small circle for the projectile
-        ctx.fillStyle = 'black';
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.width,0,Math.PI * 2);
-        ctx.fill();
+        //ctx.fillStyle = 'black'; //old small ball
+        //ctx.beginPath();
+        //ctx.arc(this.x, this.y, this.width,0,Math.PI * 2);
+        //ctx.fill();
+        ctx.drawImage(bullet1, this.x, this.y,76,45);
     }
 }
 function handleProjectiles(){ //handles all the individual projectiles
@@ -237,7 +241,7 @@ class Enemy  {
         this.height = cellSize - cellGap * 2;
         this.speed = Math.random() * 0.1 + 0.3; // attributed speed that is randomly generated for the enemy
         this.movement = this.speed;
-        this.health = Math.floor(Math.random() * 300);
+        this.health = Math.floor(Math.random() * 200);
         this.maxHealth = this.health;
         //attributes used for the animation of the enemy sprites
         this.enemyType = enemyTypes[Math.floor(Math.random() * enemyTypes.length)];
@@ -279,7 +283,7 @@ function handleEnemies(){ //method to update and handle the ememies in the grid
         }
         if(enemies[i].health <= 0){//checks if the enemy's health is equal to 0, then it removes it from the grid
             let gainedResources = Math.floor(enemies[i].maxHealth/10); // used to give back to the player resources according to the damage inflicted
-            floatingMessages.push(new floatingMessage('+' + gainedResources,enemies[i].x,enemies[i].y + 40,30,'red'));
+            floatingMessages.push(new floatingMessage('+' + gainedResources,enemies[i].x,enemies[i].y + 40,30,'black'));
             floatingMessages.push(new floatingMessage('+' + gainedResources,160,50,30,'gold'));
             numberOfResources += gainedResources;
             score += gainedResources;
@@ -293,7 +297,7 @@ function handleEnemies(){ //method to update and handle the ememies in the grid
         let verticalPosition = Math.floor(Math.random() * 5 + 1) * cellSize + cellGap; //positions randomly the enemy on any given row
         enemies.push(new Enemy(verticalPosition)); //adds a new enemy
         enemyPositions.push(verticalPosition);
-        if (enemiesInterval > 120) enemiesInterval -= 50; //shortens the flow-rate used mainly to control the games DIFFICULTY
+        if (enemiesInterval > 100) enemiesInterval -= 50; //shortens the flow-rate used mainly to control the games DIFFICULTY
     }
 }
 //RESOURCES development here:
@@ -339,12 +343,12 @@ function handleGameStatus(){ // small method to display the available resources 
     ctx.fillText('Score: ' + score,20,40);
     ctx.fillText('Resources: ' + numberOfResources,20,80);
     if(gameOver){ //method to display the Game Over Screen at the end of the game!
-        ctx.fillStyle = 'purple';
+        ctx.fillStyle = 'gold';
         ctx.font = '120px Delicious Handrawn';
         ctx.fillText('GAME OVER', 220, 360);
     }
     if (score >= winningScore && enemies.length === 0){ //controls if the player has actually got the winning score
-        ctx.fillStyle = 'black';
+        ctx.fillStyle = 'gold';
         ctx.font = '60px Delicious Handrawn';
         ctx.fillText('LEVEL COMPLETE', 260,320);
         ctx.font = '30px Delicious Handrawn';
