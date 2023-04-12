@@ -15,7 +15,8 @@ const enemyPositions = []; //array used to store the current positions of the en
 const projectiles = []; //array used to store the various projectiles
 const resources = []; //array used to store all the resources
 const floatingMessages = []; //array used to store all the floating messages
-const winningScore = 100; //winning score used to let the game finish whenever the player gets to that value
+const enemyTypes = []; //array used to store all the different type of enemies
+const winningScore = 1000; //winning score used to let the game finish whenever the player gets to that value
 
 let enemiesInterval = 600; //variable used to control the "flow" of the enemies
 let numberOfResources = 300;
@@ -224,10 +225,10 @@ function handleFloatingMessages(){ //it will update and remove the messages on-s
 }
 //ENEMIES development here:
 //ememy sprites and animations:
-const enemyTypes = [];
+const enemySprites = [];
 const enemy1 = new Image();
 enemy1.src = 'sprites&assets/zombie.png';
-enemyTypes.push(enemy1);
+enemySprites.push(enemy1);
 //const enemy2 = new Image();
 //enemy2.src = 'sprites&assets/enemy/Flying-Enemy/eye monster idle.png';
 //enemyTypes.push(enemy2);
@@ -239,9 +240,9 @@ class Enemy  {
         this.y = verticalPosition;
         this.width = cellSize - cellGap * 2;
         this.height = cellSize - cellGap * 2;
-        this.speed = Math.random() * 0.1 + 0.3; // attributed speed that is randomly generated for the enemy
+        this.speed = Math.random() * 0.1 + 0.6; // attributed speed that is randomly generated for the enemy
         this.movement = this.speed;
-        this.health = Math.floor(Math.random() * 200);
+        this.health = 100;
         this.maxHealth = this.health;
         //attributes used for the animation of the enemy sprites
         this.enemyType = enemyTypes[Math.floor(Math.random() * enemyTypes.length)];
@@ -254,7 +255,7 @@ class Enemy  {
     update(){ //updates the position of the enemy
         this.x -= this.movement;
         //animation part of the enemy sprites
-        if (frame % 15 === 0){
+        if (frame % 9 === 0){
             if (this.frameX < this.maxFrame) this.frameX++;
             else this.frameX = this.minFrame;
         }
@@ -297,7 +298,7 @@ function handleEnemies(){ //method to update and handle the ememies in the grid
         let verticalPosition = Math.floor(Math.random() * 5 + 1) * cellSize + cellGap; //positions randomly the enemy on any given row
         enemies.push(new Enemy(verticalPosition)); //adds a new enemy
         enemyPositions.push(verticalPosition);
-        if (enemiesInterval > 100) enemiesInterval -= 50; //shortens the flow-rate used mainly to control the games DIFFICULTY
+        if (enemiesInterval > 110) enemiesInterval -= 50; //shortens the flow-rate used mainly to control the games DIFFICULTY
     }
 }
 //RESOURCES development here:
