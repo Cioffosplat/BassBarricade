@@ -245,7 +245,7 @@ class Enemy  {
         this.health = 100;
         this.maxHealth = this.health;
         //attributes used for the animation of the enemy sprites
-        this.enemyType = enemyTypes[Math.floor(Math.random() * enemyTypes.length)];
+        this.enemyType = enemySprites[Math.floor(Math.random() * enemySprites.length)];
         this.frameX = 0;
         this.minFrame = 0;
         this.maxFrame = 7;
