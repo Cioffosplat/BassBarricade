@@ -86,7 +86,7 @@ class Projectile{
         this.width = 10;
         this.height = 10;
         this.power = 20; //determines the power of the projectile, so how much damage it inflicts
-        this.speed = 4; //speed at which the projectile runs
+        this.speed = 5; //speed at which the projectile runs
     }
     update(){
         this.x += this.speed;

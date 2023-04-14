@@ -14,7 +14,7 @@ body{
     height: 600px;
     background: linear-gradient(to bottom, #9c27b0, #673ab7);
     background-size: 400% 400%;
-    animation: gradient 10s ease infinite;
+    animation: gradient 5s ease infinite;
     font-family: 'Delicious Handrawn', cursive;
 }
 
