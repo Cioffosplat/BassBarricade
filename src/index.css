@@ -1,6 +1,6 @@
 /*Main CSS design choices that influence the body and the canvas aesthetics*/
 body{
-    background: linear-gradient(to bottom, black, dimgrey);
+    background: linear-gradient(to bottom, grey, dimgrey);
     background-size: 100000% 100000%;
     animation: gradient 10s ease infinite;
 }
@@ -13,7 +13,7 @@ body{
     transform: translate(-50%, -50%);
     width: 900px;
     height: 600px;
-    background: linear-gradient(to bottom, greenyellow, green);
+    background: linear-gradient(to bottom, greenyellow, gold);
     background-size: 400% 400%;
     animation: gradient 5s ease infinite;
     font-family: 'Delicious Handrawn', cursive;
@@ -125,4 +125,44 @@ body{
     font-size: 120px;
     text-align: center;
     color: gold;
+}
+
+/*start screen css part*/
+#startScreen {
+    font-family: 'Delicious Handrawn', cursive;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 4px solid black;
+    top: 50%;
+    left: 32.5%;
+    transform: translate(-50%, -50%);
+    width: 900px;
+    height: 600px;
+}
+
+#startScreen h1 {
+    font-family: 'Delicious Handrawn', cursive;
+    font-size: 90px;
+    margin-bottom: 5px;
+    color: black;
+}
+
+#startButton {
+    font-family: 'Delicious Handrawn', cursive;
+    font-size: 40px;
+    padding: 30px;
+    border: none;
+    background-color: blue;
+    color: gold;
+    cursor: pointer;
+    border-radius: 60px;
+}
+#startScreen h4 {
+    font-family: 'Delicious Handrawn', cursive;
+    font-size: 25px;
+    margin-bottom: 40px;
+    color: black;
 }

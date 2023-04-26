@@ -17,6 +17,8 @@ const resources = []; //array used to store all the resources
 const floatingMessages = []; //array used to store all the floating messages
 const enemyTypes = []; //array used to store all the different type of enemies
 const winningScore = 1000; //winning score used to let the game finish whenever the player gets to that value
+const startButton = document.getElementById('startButton');//variable for temporary start button
+const startScreen = document.getElementById('startScreen');//variable for temporary start screen
 
 let enemiesInterval = 600; //variable used to control the "flow" of the enemies
 let numberOfResources = 300;
@@ -387,7 +389,11 @@ function animate(){ //function used to "re-draw" the element of the canvas makin
     frame++;
     if (!gameOver) requestAnimationFrame(animate); // method used to create an animation "loop" effect using recursion : )
 }
-animate();
+//animate(); old way to animate the game without the button
+startButton.addEventListener('click', () => {
+    animate();
+    startScreen.style.display = 'none';
+});
 
 function collision (first, second){//method used to make two objects collide
     if (    !( first.x > second.x + second.width || //horizontal collision check
