@@ -2,7 +2,7 @@ const canvas = document.getElementById('canvas1'); //element used to connect the
 const ctx = canvas.getContext('2d'); //element used to use the 2d available methods of the canvas
 
 canvas.width = 900; //using here the same width and height as the html file to adjust the canvas correctly
-canvas.height = 500; // *** AJUST TO FIT ON THE SIDE OF THE SCREEN ***
+canvas.height = 600; // *** AJUST TO FIT ON THE SIDE OF THE SCREEN ***
 
 //global variables (just to make it a littile bit easier to read) will be declared here:
 const cellSize = 100;
