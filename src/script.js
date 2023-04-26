@@ -57,7 +57,7 @@ class Cell{ //class made for single cell creation for the Canvas
     }
     draw(){ //this method is responsible for drawing and positioning the objects in their respective cells
         if (mouse.x && mouse.y && collision(this,mouse)){ //check used for the cell interaction with the mouse
-            ctx.strokeStyle = 'gold';
+            ctx.strokeStyle = 'black';
             ctx.strokeRect(this.x, this.y, this.width, this.height);
         }
     }
@@ -86,7 +86,7 @@ class Projectile{
         this.width = 10;
         this.height = 10;
         this.power = 20; //determines the power of the projectile, so how much damage it inflicts
-        this.speed = 5; //speed at which the projectile runs
+        this.speed = 4; //speed at which the projectile runs
     }
     update(){
         this.x += this.speed;
@@ -240,7 +240,7 @@ class Enemy  {
         this.y = verticalPosition;
         this.width = cellSize - cellGap * 2;
         this.height = cellSize - cellGap * 2;
-        this.speed = Math.random() * 0.1 + 0.6; // attributed speed that is randomly generated for the enemy
+        this.speed = Math.random() * 0.1 + 0.4; // attributed speed that is randomly generated for the enemy
         this.movement = this.speed;
         this.health = 100;
         this.maxHealth = this.health;
@@ -284,8 +284,8 @@ function handleEnemies(){ //method to update and handle the ememies in the grid
         }
         if(enemies[i].health <= 0){//checks if the enemy's health is equal to 0, then it removes it from the grid
             let gainedResources = Math.floor(enemies[i].maxHealth/10); // used to give back to the player resources according to the damage inflicted
-            floatingMessages.push(new floatingMessage('+' + gainedResources,enemies[i].x,enemies[i].y + 40,30,'gold'));
-            floatingMessages.push(new floatingMessage('+' + gainedResources,160,50,30,'gold'));
+            floatingMessages.push(new floatingMessage('+' + gainedResources,enemies[i].x,enemies[i].y + 40,30,'black'));
+            floatingMessages.push(new floatingMessage('+' + gainedResources,160,50,30,'black'));
             numberOfResources += gainedResources;
             score += gainedResources;
             const findThisIndex = enemyPositions.indexOf(enemies[i].y);
@@ -317,7 +317,7 @@ class Resource{
         //ctx.fillStyle = 'yellow'; //old yellow rectangle
         //ctx.fillRect(this.x, this.y, this.width, this.height);
         ctx.drawImage(resource, this.x, this.y,60,60);
-        ctx.fillStyle = 'gold';
+        ctx.fillStyle = 'black';
         ctx.font = '30px Delicious Handrawn';
         ctx.fillText(this.amount, this.x + 60, this.y);
     }
@@ -330,8 +330,8 @@ function handleResources(){ //handling of the resources
         resources[i].draw();
         if(resources[i] && mouse.x && mouse.y && collision(resources[i], mouse)){
             numberOfResources += resources[i].amount;
-            floatingMessages.push(new floatingMessage('+' + resources[i].amount,resources[i].x,resources[i].y,30,'gold')); //messages to display the added resources
-            floatingMessages.push(new floatingMessage('+' + resources[i].amount,160,50,30,'gold'));
+            floatingMessages.push(new floatingMessage('+' + resources[i].amount,resources[i].x,resources[i].y,30,'black')); //messages to display the added resources
+            floatingMessages.push(new floatingMessage('+' + resources[i].amount,160,50,30,'black'));
             resources.splice(i, 1);
             i--;
         }
@@ -344,12 +344,12 @@ function handleGameStatus(){ // small method to display the available resources 
     ctx.fillText('Score: ' + score,20,40);
     ctx.fillText('Resources: ' + numberOfResources,20,80);
     if(gameOver){ //method to display the Game Over Screen at the end of the game!
-        ctx.fillStyle = 'gold';
+        ctx.fillStyle = 'black';
         ctx.font = '120px Delicious Handrawn';
         ctx.fillText('GAME OVER', 220, 360);
     }
     if (score >= winningScore && enemies.length === 0){ //controls if the player has actually got the winning score
-        ctx.fillStyle = 'gold';
+        ctx.fillStyle = 'black';
         ctx.font = '60px Delicious Handrawn';
         ctx.fillText('LEVEL COMPLETE', 260,320);
         ctx.font = '30px Delicious Handrawn';
@@ -369,13 +369,13 @@ canvas.addEventListener('click', function (){ // function that is used to manage
         defenders.push(new Defender(gridPositionX,gridPositionY));
         numberOfResources -= defenderCost;
     } else{ //this displays the warning message
-        floatingMessages.push(new floatingMessage('need more resources',mouse.x,mouse.y,20,'gold'));
+        floatingMessages.push(new floatingMessage('need more resources',mouse.x,mouse.y,20,'black'));
     }
 })
 
 function animate(){ //function used to "re-draw" the element of the canvas making it seem "animated"
     ctx.clearRect(0,0, canvas.width,canvas.height); // method used to "clear up" the unnecessary stuff that constantly gets drawn
-    ctx.fillStyle = 'purple';
+    ctx.fillStyle = 'blue';
     ctx.fillRect(0,0,controlsBar.width,controlsBar.height);
     handleGameGrid();
     handleDefenders();
