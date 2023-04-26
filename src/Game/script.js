@@ -57,7 +57,7 @@ class Cell{ //class made for single cell creation for the Canvas
     }
     draw(){ //this method is responsible for drawing and positioning the objects in their respective cells
         if (mouse.x && mouse.y && collision(this,mouse)){ //check used for the cell interaction with the mouse
-            ctx.strokeStyle = 'black';
+            ctx.strokeStyle = 'gold';
             ctx.strokeRect(this.x, this.y, this.width, this.height);
         }
     }
@@ -284,7 +284,7 @@ function handleEnemies(){ //method to update and handle the ememies in the grid
         }
         if(enemies[i].health <= 0){//checks if the enemy's health is equal to 0, then it removes it from the grid
             let gainedResources = Math.floor(enemies[i].maxHealth/10); // used to give back to the player resources according to the damage inflicted
-            floatingMessages.push(new floatingMessage('+' + gainedResources,enemies[i].x,enemies[i].y + 40,30,'black'));
+            floatingMessages.push(new floatingMessage('+' + gainedResources,enemies[i].x,enemies[i].y + 40,30,'gold'));
             floatingMessages.push(new floatingMessage('+' + gainedResources,160,50,30,'gold'));
             numberOfResources += gainedResources;
             score += gainedResources;
@@ -317,7 +317,7 @@ class Resource{
         //ctx.fillStyle = 'yellow'; //old yellow rectangle
         //ctx.fillRect(this.x, this.y, this.width, this.height);
         ctx.drawImage(resource, this.x, this.y,60,60);
-        ctx.fillStyle = 'black';
+        ctx.fillStyle = 'gold';
         ctx.font = '30px Delicious Handrawn';
         ctx.fillText(this.amount, this.x + 60, this.y);
     }
@@ -330,7 +330,7 @@ function handleResources(){ //handling of the resources
         resources[i].draw();
         if(resources[i] && mouse.x && mouse.y && collision(resources[i], mouse)){
             numberOfResources += resources[i].amount;
-            floatingMessages.push(new floatingMessage('+' + resources[i].amount,resources[i].x,resources[i].y,30,'black')); //messages to display the added resources
+            floatingMessages.push(new floatingMessage('+' + resources[i].amount,resources[i].x,resources[i].y,30,'gold')); //messages to display the added resources
             floatingMessages.push(new floatingMessage('+' + resources[i].amount,160,50,30,'gold'));
             resources.splice(i, 1);
             i--;
@@ -369,7 +369,7 @@ canvas.addEventListener('click', function (){ // function that is used to manage
         defenders.push(new Defender(gridPositionX,gridPositionY));
         numberOfResources -= defenderCost;
     } else{ //this displays the warning message
-        floatingMessages.push(new floatingMessage('need more resources',mouse.x,mouse.y,20,'black'));
+        floatingMessages.push(new floatingMessage('need more resources',mouse.x,mouse.y,20,'gold'));
     }
 })
 
@@ -402,3 +402,32 @@ function collision (first, second){//method used to make two objects collide
 window.addEventListener('resize', function(){ //method used to correctly handle the resize function of the web window
     canvasPosition = canvas.getBoundingClientRect();
 })
+
+fetch('leaderboard.json')
+    .then(response => response.json())
+    .then(data => {
+        const leaderboardElement = document.getElementById('leaderboard');
+        const leaderboard = data.entries.sort((a, b) => b.score - a.score);
+
+        leaderboard.forEach((entry, index) => {
+            const place = index + 1;
+            const leaderboardEntryElement = document.createElement('li');
+            leaderboardEntryElement.classList.add('leaderboard-entry');
+
+            const leaderboardEntryPlaceElement = document.createElement('span');
+            leaderboardEntryPlaceElement.classList.add('leaderboard-entry-place');
+            leaderboardEntryPlaceElement.textContent = place;
+
+            const leaderboardEntryNameElement = document.createElement('span');
+            leaderboardEntryNameElement.textContent = entry.name;
+
+            const leaderboardEntryScoreElement = document.createElement('span');
+            leaderboardEntryScoreElement.textContent = entry.score;
+
+            leaderboardEntryElement.appendChild(leaderboardEntryPlaceElement);
+            leaderboardEntryElement.appendChild(leaderboardEntryNameElement);
+            leaderboardEntryElement.appendChild(leaderboardEntryScoreElement);
+            leaderboardElement.appendChild(leaderboardEntryElement);
+        });
+    });
+

@@ -1,0 +1,128 @@
+/*Main CSS design choices that influence the body and the canvas aesthetics*/
+body{
+    background: linear-gradient(to bottom, #9c27b0, #673ab7);
+    background-size: 100000% 100000%;
+    animation: gradient 10s ease infinite;
+}
+
+#canvas1{
+    border: 2px solid black;
+    position: absolute;
+    top: 50%;
+    left: 32.5%;
+    transform: translate(-50%, -50%);
+    width: 900px;
+    height: 600px;
+    background: linear-gradient(to bottom, #9c27b0, #673ab7);
+    background-size: 400% 400%;
+    animation: gradient 5s ease infinite;
+    font-family: 'Delicious Handrawn', cursive;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 0%;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+/* CSS part where all of the customization for the leaderboard happens, includes the small window with shadows and title and boxes */
+
+.leaderboard-container {
+    font-family: 'Delicious Handrawn', cursive;
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 40%;
+    padding: 10px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0 20px 20px 0;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+}
+
+.leaderboard-container:before {
+    font-family: 'Delicious Handrawn', cursive;
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -20px;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 10px solid black;
+    transform: translateY(-50%);
+}
+
+.leaderboard-container:after {
+    font-family: 'Delicious Handrawn', cursive;
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -16px;
+    width: 0;
+    height: 0;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 8px solid gold;
+    transform: translateY(-50%);
+}
+
+
+.leaderboard {
+    font-family: 'Delicious Handrawn', cursive;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    max-width: 500px;
+}
+
+.leaderboard-entry {
+    font-family: 'Delicious Handrawn', cursive;
+    margin-bottom: 10px;
+    font-size: 24px;
+    color: gold;
+    background-color: black;
+    border-radius: 25px;
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    margin-right: 70px;
+    width: 135%;
+}
+
+
+.leaderboard-entry:nth-child(even) {
+    background-color: blue;
+}
+
+.leaderboard-entry-place {
+    font-family: 'Delicious Handrawn', cursive;
+    font-size: 24px;
+    font-weight: normal;
+    color: gold;
+    margin-right: 20px;
+    text-align: center;
+}
+
+.leaderboard-container h1 {
+    font-family: 'Delicious Handrawn', cursive;
+    padding-left: 60px;
+    margin: 10px;
+    font-size: 120px;
+    text-align: center;
+    color: gold;
+}
