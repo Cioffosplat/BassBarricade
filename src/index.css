@@ -3,7 +3,6 @@ body{
     background: linear-gradient(to bottom, grey, black);
     background-size: 100000% 100000%;
     animation: gradient 10s ease infinite;
-    zoom: 90%;
 }
 
 #canvas1{
