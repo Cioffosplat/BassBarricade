@@ -8,6 +8,7 @@
     { "name": "Phillip", "score": 120 },
     { "name": "Joseph", "score": 69 },
     { "name": "Roy", "score": 400 },
-    { "name": "Aston", "score": 20 }
+    { "name": "Aston", "score": 20 },
+    { "name": "Bob", "score": 10 }
   ]
 }
