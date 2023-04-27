@@ -16,9 +16,10 @@ const projectiles = []; //array used to store the various projectiles
 const resources = []; //array used to store all the resources
 const floatingMessages = []; //array used to store all the floating messages
 const enemyTypes = []; //array used to store all the different type of enemies
-const winningScore = 1000; //winning score used to let the game finish whenever the player gets to that value
-const startButton = document.getElementById('startButton');//variable for temporary start button
-const startScreen = document.getElementById('startScreen');//variable for temporary start screen
+const winningScore = 100; //winning score used to let the game finish whenever the player gets to that value
+const startButton = document.getElementById('startButton');//constant for temporary start button
+const startScreen = document.getElementById('startScreen');//constant for temporary start screen
+const retryButton = document.getElementById('retryButton');//constant for the reset button
 
 let enemiesInterval = 600; //variable used to control the "flow" of the enemies
 let numberOfResources = 300;
@@ -88,7 +89,7 @@ class Projectile{
         this.width = 10;
         this.height = 10;
         this.power = 20; //determines the power of the projectile, so how much damage it inflicts
-        this.speed = 4; //speed at which the projectile runs
+        this.speed = 6; //speed at which the projectile runs
     }
     update(){
         this.x += this.speed;
@@ -349,6 +350,8 @@ function handleGameStatus(){ // small method to display the available resources 
         ctx.fillStyle = 'black';
         ctx.font = '120px Delicious Handrawn';
         ctx.fillText('GAME OVER', 220, 360);
+        // show the retry button
+        retryButton.style.display = 'block';
     }
     if (score >= winningScore && enemies.length === 0){ //controls if the player has actually got the winning score
         ctx.fillStyle = 'black';
@@ -390,10 +393,18 @@ function animate(){ //function used to "re-draw" the element of the canvas makin
     if (!gameOver) requestAnimationFrame(animate); // method used to create an animation "loop" effect using recursion : )
 }
 //animate(); old way to animate the game without the button
+//start and finish button functions
 startButton.addEventListener('click', () => {
     animate();
     startScreen.style.display = 'none';
 });
+retryButton.addEventListener('click', () => {
+    // restart the game by reloading the page
+    location.reload();
+    // hide the retry button again
+    retryButton.style.display = 'none';
+});
+
 
 function collision (first, second){//method used to make two objects collide
     if (    !( first.x > second.x + second.width || //horizontal collision check

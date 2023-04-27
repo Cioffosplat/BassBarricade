@@ -1,6 +1,6 @@
 /*Main CSS design choices that influence the body and the canvas aesthetics*/
 body{
-    background: linear-gradient(to bottom, grey, dimgrey);
+    background: linear-gradient(to bottom, grey, black);
     background-size: 100000% 100000%;
     animation: gradient 10s ease infinite;
 }
@@ -127,7 +127,7 @@ body{
     color: gold;
 }
 
-/*start screen css part*/
+/*start and retry screen css part*/
 #startScreen {
     font-family: 'Delicious Handrawn', cursive;
     position: absolute;
@@ -165,4 +165,20 @@ body{
     font-size: 25px;
     margin-bottom: 40px;
     color: black;
+}
+
+#retryButton {
+    position: absolute;
+    font-family: 'Delicious Handrawn', cursive;
+    font-size: 30px;
+    padding: 10px;
+    border: none;
+    background-color: blue;
+    color: gold;
+    cursor: pointer;
+    border-radius: 60px;
+    width: 180px;
+    height: 60px;
+    top: 58%;
+    left: 28%;
 }
