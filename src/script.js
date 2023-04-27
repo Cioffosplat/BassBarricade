@@ -349,16 +349,18 @@ function handleGameStatus(){ // small method to display the available resources 
     if(gameOver){ //method to display the Game Over Screen at the end of the game!
         ctx.fillStyle = 'black';
         ctx.font = '120px Delicious Handrawn';
-        ctx.fillText('GAME OVER', 220, 360);
+        ctx.fillText('GAME OVER', 220, 330);
+        ctx.font = '30px Delicious Handrawn';
+        ctx.fillText('You finished with ' + score + ' points', 324,380);
         // show the retry button
         retryButton.style.display = 'block';
     }
     if (score >= winningScore && enemies.length === 0){ //controls if the player has actually got the winning score
         ctx.fillStyle = 'black';
-        ctx.font = '60px Delicious Handrawn';
-        ctx.fillText('LEVEL COMPLETE', 260,320);
+        ctx.font = '100px Delicious Handrawn';
+        ctx.fillText('YOU WON!', 280,330);
         ctx.font = '30px Delicious Handrawn';
-        ctx.fillText('You win with ' + score + 'points', 264,360);
+        ctx.fillText('You won with ' + score + 'points', 344,380);
     }
 }
 
@@ -393,6 +395,7 @@ function animate(){ //function used to "re-draw" the element of the canvas makin
     if (!gameOver) requestAnimationFrame(animate); // method used to create an animation "loop" effect using recursion : )
 }
 //animate(); old way to animate the game without the button
+leaderboard();
 //start and finish button functions
 startButton.addEventListener('click', () => {
     animate();
@@ -420,32 +423,34 @@ window.addEventListener('resize', function(){ //method used to correctly handle 
     canvasPosition = canvas.getBoundingClientRect();
 })
 
-//function/method used to read the JSON file and print i on the leaderboard 
-fetch('leaderboard.json')
-    .then(response => response.json())
-    .then(data => {
-        const leaderboardElement = document.getElementById('leaderboard');
-        const leaderboard = data.entries.sort((a, b) => b.score - a.score);
+function leaderboard(){
+    //function/method used to read the JSON file and print i on the leaderboard
+    fetch('leaderboard.json')
+        .then(response => response.json())
+        .then(data => {
+            const leaderboardElement = document.getElementById('leaderboard');
+            const leaderboard = data.entries.sort((a, b) => b.score - a.score);
 
-        leaderboard.forEach((entry, index) => {
-            const place = index + 1;
-            const leaderboardEntryElement = document.createElement('li');
-            leaderboardEntryElement.classList.add('leaderboard-entry');
+            leaderboard.forEach((entry, index) => {
+                const place = index + 1;
+                const leaderboardEntryElement = document.createElement('li');
+                leaderboardEntryElement.classList.add('leaderboard-entry');
 
-            const leaderboardEntryPlaceElement = document.createElement('span');
-            leaderboardEntryPlaceElement.classList.add('leaderboard-entry-place');
-            leaderboardEntryPlaceElement.textContent = place;
+                const leaderboardEntryPlaceElement = document.createElement('span');
+                leaderboardEntryPlaceElement.classList.add('leaderboard-entry-place');
+                leaderboardEntryPlaceElement.textContent = place;
 
-            const leaderboardEntryNameElement = document.createElement('span');
-            leaderboardEntryNameElement.textContent = entry.name;
+                const leaderboardEntryNameElement = document.createElement('span');
+                leaderboardEntryNameElement.textContent = entry.name;
 
-            const leaderboardEntryScoreElement = document.createElement('span');
-            leaderboardEntryScoreElement.textContent = entry.score;
+                const leaderboardEntryScoreElement = document.createElement('span');
+                leaderboardEntryScoreElement.textContent = entry.score;
 
-            leaderboardEntryElement.appendChild(leaderboardEntryPlaceElement);
-            leaderboardEntryElement.appendChild(leaderboardEntryNameElement);
-            leaderboardEntryElement.appendChild(leaderboardEntryScoreElement);
-            leaderboardElement.appendChild(leaderboardEntryElement);
+                leaderboardEntryElement.appendChild(leaderboardEntryPlaceElement);
+                leaderboardEntryElement.appendChild(leaderboardEntryNameElement);
+                leaderboardEntryElement.appendChild(leaderboardEntryScoreElement);
+                leaderboardElement.appendChild(leaderboardEntryElement);
+            });
         });
-    });
+}
 

@@ -3,6 +3,7 @@ body{
     background: linear-gradient(to bottom, grey, black);
     background-size: 100000% 100000%;
     animation: gradient 10s ease infinite;
+    zoom: 100%;
 }
 
 #canvas1{
@@ -63,6 +64,7 @@ body{
     border-bottom: 10px solid transparent;
     border-right: 10px solid black;
     transform: translateY(-50%);
+    cursor: pointer;
 }
 
 .leaderboard-container:after {
@@ -75,8 +77,9 @@ body{
     height: 0;
     border-top: 8px solid transparent;
     border-bottom: 8px solid transparent;
-    border-right: 8px solid gold;
+    border-right: 8px solid mediumpurple;
     transform: translateY(-50%);
+    cursor: pointer;
 }
 
 
@@ -86,13 +89,13 @@ body{
     padding: 0;
     margin: 0;
     width: 100%;
-    max-width: 500px;
+    -webkit-text-stroke: 1px black; /*attribute for the border on text*/
 }
 
 .leaderboard-entry {
     font-family: 'Delicious Handrawn', cursive;
     margin-bottom: 10px;
-    font-size: 24px;
+    font-size: 30px;
     color: gold;
     background-color: black;
     border-radius: 25px;
@@ -101,13 +104,14 @@ body{
     justify-content: space-between;
     align-items: center;
     position: relative;
-    margin-right: 70px;
+    margin-right: 60px;
     width: 135%;
+    -webkit-text-stroke: 1px black; /*attribute for the border on text*/
 }
 
 
 .leaderboard-entry:nth-child(even) {
-    background-color: blue;
+    background-color: mediumpurple;
 }
 
 .leaderboard-entry-place {
@@ -117,6 +121,7 @@ body{
     color: gold;
     margin-right: 20px;
     text-align: center;
+    -webkit-text-stroke: 1px black; /*attribute for the border on text*/
 }
 
 .leaderboard-container h1 {
@@ -126,6 +131,7 @@ body{
     font-size: 120px;
     text-align: center;
     color: gold;
+    -webkit-text-stroke: 1px black; /*attribute for the border on text*/
 }
 
 /*start and retry screen css part*/
@@ -148,38 +154,44 @@ body{
     font-family: 'Delicious Handrawn', cursive;
     font-size: 90px;
     margin-bottom: 5px;
-    color: black;
+    color: gold;
+    -webkit-text-stroke: 1px black; /*attribute for the border on text*/
 }
 
+#startScreen h4 {
+    font-family: 'Delicious Handrawn', cursive;
+    font-size: 30px;
+    margin-bottom: 40px;
+    color: gold;
+    -webkit-text-stroke: 1px black; /*attribute for the border on text*/
+}
+
+/*start button css style */
 #startButton {
     font-family: 'Delicious Handrawn', cursive;
     font-size: 40px;
-    padding: 30px;
+    padding: 35px;
     border: none;
-    background-color: blue;
+    background-color: mediumpurple;
     color: gold;
     cursor: pointer;
     border-radius: 60px;
-}
-#startScreen h4 {
-    font-family: 'Delicious Handrawn', cursive;
-    font-size: 25px;
-    margin-bottom: 40px;
-    color: black;
+    -webkit-text-stroke: 2px black;
 }
 
 #retryButton {
     position: absolute;
     font-family: 'Delicious Handrawn', cursive;
-    font-size: 30px;
-    padding: 10px;
-    border: none;
-    background-color: blue;
+    font-size: 40px;
+    padding: 5px;
+    border: 6px black;
+    background-color: mediumpurple;
     color: gold;
     cursor: pointer;
     border-radius: 60px;
-    width: 180px;
-    height: 70px;
-    top: 58%;
-    left: 28%;
+    -webkit-text-stroke: 2px black; /*attribute for the border on text*/
+    width: 7%;
+    top: 62%;
+    height: 7%;
+    left: 29%;
 }
