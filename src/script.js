@@ -382,7 +382,7 @@ canvas.addEventListener('click', function (){ // function that is used to manage
 
 function animate(){ //function used to "re-draw" the element of the canvas making it seem "animated"
     ctx.clearRect(0,0, canvas.width,canvas.height); // method used to "clear up" the unnecessary stuff that constantly gets drawn
-    ctx.fillStyle = 'blue';
+    ctx.fillStyle = 'mediumpurple';
     ctx.fillRect(0,0,controlsBar.width,controlsBar.height);
     handleGameGrid();
     handleDefenders();
