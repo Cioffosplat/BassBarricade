@@ -420,6 +420,7 @@ window.addEventListener('resize', function(){ //method used to correctly handle 
     canvasPosition = canvas.getBoundingClientRect();
 })
 
+//function/method used to read the JSON file and print i on the leaderboard 
 fetch('leaderboard.json')
     .then(response => response.json())
     .then(data => {
