@@ -14,10 +14,6 @@ body{
     transform: translate(-50%, -50%);
     width: 900px;
     height: 600px;
-    /*background: linear-gradient(to bottom, greenyellow, gold); gradient background
-    background-size: 400% 400%;
-    animation: gradient 5s ease infinite;
-    font-family: 'Delicious Handrawn', cursive;*/
     background-image: url("sprites&assets/Lawn.png");
 }
 
