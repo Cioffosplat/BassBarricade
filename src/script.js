@@ -243,7 +243,7 @@ class Enemy  {
         this.y = verticalPosition;
         this.width = cellSize - cellGap * 2;
         this.height = cellSize - cellGap * 2;
-        this.speed = Math.random() * 0.1 + 0.8; // attributed speed that is randomly generated for the enemy
+        this.speed = Math.random() * 0.1 + 0.4; // attributed speed that is randomly generated for the enemy
         this.movement = this.speed;
         this.health = 100;
         this.maxHealth = this.health;
