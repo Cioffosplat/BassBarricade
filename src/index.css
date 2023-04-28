@@ -41,7 +41,7 @@ body{
     right: 0;
     top: 0;
     bottom: 0;
-    width: 40%;
+    width: 33%;
     padding: 10px;
     box-sizing: border-box;
     display: flex;
@@ -105,7 +105,7 @@ body{
     align-items: center;
     position: relative;
     margin-right: 60px;
-    width: 135%;
+    width: 130%;
     -webkit-text-stroke: 1px black; /*attribute for the border on text*/
 }
 
@@ -128,7 +128,7 @@ body{
     font-family: 'Delicious Handrawn', cursive;
     padding-left: 70px;
     margin: 10px;
-    font-size: 120px;
+    font-size: 90px;
     text-align: center;
     color: gold;
     -webkit-text-stroke: 1px black; /*attribute for the border on text*/
