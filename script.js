@@ -20,6 +20,7 @@ const winningScore = 100; //winning score used to let the game finish whenever t
 const startButton = document.getElementById('startButton');//constant for temporary start button
 const startScreen = document.getElementById('startScreen');//constant for temporary start screen
 const retryButton = document.getElementById('retryButton');//constant for the reset button
+const submitButton = document.getElementById('submit-button');//temporary submit button for the name and score
 
 let enemiesInterval = 600; //variable used to control the "flow" of the enemies
 let numberOfResources = 300;
@@ -407,7 +408,11 @@ retryButton.addEventListener('click', () => {
     // hide the retry button again
     retryButton.style.display = 'none';
 });
+submitButton.addEventListener('click', addEntry);
 
+window.addEventListener('resize', function(){ //method used to correctly handle the resize function of the web window
+    canvasPosition = canvas.getBoundingClientRect();
+})
 
 function collision (first, second){//method used to make two objects collide
     if (    !( first.x > second.x + second.width || //horizontal collision check
@@ -419,12 +424,8 @@ function collision (first, second){//method used to make two objects collide
     }
 }
 
-window.addEventListener('resize', function(){ //method used to correctly handle the resize function of the web window
-    canvasPosition = canvas.getBoundingClientRect();
-})
-
+//function/method used to read the JSON file and print i on the leaderboard
 function leaderboard(){
-    //function/method used to read the JSON file and print i on the leaderboard
     fetch('leaderboard.json')
         .then(response => response.json())
         .then(data => {
@@ -453,4 +454,56 @@ function leaderboard(){
             });
         });
 }
+function updateLeaderboard(data) {
+    const leaderboardElement = document.getElementById('leaderboard');
+    leaderboardElement.innerHTML = '';
+
+    const leaderboard = data.sort((a, b) => b.score - a.score);
+
+    leaderboard.forEach((entry, index) => {
+        const place = index + 1;
+        const leaderboardEntryElement = document.createElement('li');
+        leaderboardEntryElement.classList.add('leaderboard-entry');
+
+        const leaderboardEntryPlaceElement = document.createElement('span');
+        leaderboardEntryPlaceElement.classList.add('leaderboard-entry-place');
+        leaderboardEntryPlaceElement.textContent = place;
+
+        const leaderboardEntryNameElement = document.createElement('span');
+        leaderboardEntryNameElement.textContent = entry.name;
+
+        const leaderboardEntryScoreElement = document.createElement('span');
+        leaderboardEntryScoreElement.textContent = entry.score;
+
+        leaderboardEntryElement.appendChild(leaderboardEntryPlaceElement);
+        leaderboardEntryElement.appendChild(leaderboardEntryNameElement);
+        leaderboardEntryElement.appendChild(leaderboardEntryScoreElement);
+        leaderboardElement.appendChild(leaderboardEntryElement);
+    });
+}
+
+//add entry function to add the name and score to the leaderboard
+function addEntry() {
+    const name = document.getElementById('name').value;
+    const score = document.getElementById('score').value;
+
+    const entry = {
+        name: name,
+        score: score
+    };
+
+    fetch('http://localhost:3000/entries', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(entry)
+    })
+        .then(response => response.json())
+        .then(data => {
+            updateLeaderboard(data);
+        })
+        .catch(error => console.error(error));
+}
+
 
