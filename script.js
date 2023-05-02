@@ -426,16 +426,17 @@ function collision (first, second){//method used to make two objects collide
         return true;
     }
 }
-
-//function/method used to read the JSON file and print i on the leaderboard
-function leaderboard(){
+function leaderboard() {
     fetch('leaderboard.json')
         .then(response => response.json())
         .then(data => {
             const leaderboardElement = document.getElementById('leaderboard');
             const leaderboard = data.entries.sort((a, b) => b.score - a.score);
 
-            leaderboard.forEach((entry, index) => {
+            // Get the first 10 entries from the leaderboard
+            const topEntries = leaderboard.slice(0, 10);
+
+            topEntries.forEach((entry, index) => {
                 const place = index + 1;
                 const leaderboardEntryElement = document.createElement('li');
                 leaderboardEntryElement.classList.add('leaderboard-entry');
@@ -458,7 +459,6 @@ function leaderboard(){
         });
 }
 
-//add entry function to add the name and score to the leaderboard
 function addEntry() {
     const name = document.getElementById('name').value;
     const score = parseInt(document.getElementById('score').value);
@@ -468,6 +468,8 @@ function addEntry() {
         score: score
     };
 
+    //https://my-json-server.typicode.com/cioffosplat/BassBarricade/entries
+    //http://localhost:3000/entries
     fetch('http://localhost:3000/entries', {
         method: 'POST',
         headers: {
@@ -494,6 +496,11 @@ function addEntry() {
                 return bScore - aScore;
             });
 
+            // Delete the last element if the leaderboard has more than 10 entries
+            if (leaderboardArray.length > 10) {
+                leaderboardArray.pop();
+            }
+
             // Update the leaderboard with the new array
             leaderboard.innerHTML = '';
             leaderboardArray.forEach(entry => leaderboard.appendChild(entry));
@@ -503,6 +510,7 @@ function addEntry() {
         })
         .catch(error => console.error(error));
 }
+
 
 
 
