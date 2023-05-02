@@ -1,0 +1,1 @@
+json-server --watch leaderboard.json --port 3000
