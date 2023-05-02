@@ -468,7 +468,7 @@ function addEntry() {
         score: score
     };
 
-    fetch('http://localhost:3000/entries', {
+    fetch('https://my-json-server.typicode.com/cioffosplat/BassBarricade/entries', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
