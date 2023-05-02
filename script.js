@@ -1,6 +1,9 @@
 const canvas = document.getElementById('canvas1'); //element used to connect the html canvas to a javascript version of the canvas
 const ctx = canvas.getContext('2d'); //element used to use the 2d available methods of the canvas
 
+//JSON Server port to open the json file
+//json-server --watch C:\Users\cioff\OneDrive\Desktop\BassBarricade\leaderboard.json --port 3000
+
 canvas.width = 900; //using here the same width and height as the html file to adjust the canvas correctly
 canvas.height = 600; // *** AJUST TO FIT ON THE SIDE OF THE SCREEN ***
 
@@ -454,38 +457,11 @@ function leaderboard(){
             });
         });
 }
-function updateLeaderboard(data) {
-    const leaderboardElement = document.getElementById('leaderboard');
-    leaderboardElement.innerHTML = '';
-
-    const leaderboard = data.sort((a, b) => b.score - a.score);
-
-    leaderboard.forEach((entry, index) => {
-        const place = index + 1;
-        const leaderboardEntryElement = document.createElement('li');
-        leaderboardEntryElement.classList.add('leaderboard-entry');
-
-        const leaderboardEntryPlaceElement = document.createElement('span');
-        leaderboardEntryPlaceElement.classList.add('leaderboard-entry-place');
-        leaderboardEntryPlaceElement.textContent = place;
-
-        const leaderboardEntryNameElement = document.createElement('span');
-        leaderboardEntryNameElement.textContent = entry.name;
-
-        const leaderboardEntryScoreElement = document.createElement('span');
-        leaderboardEntryScoreElement.textContent = entry.score;
-
-        leaderboardEntryElement.appendChild(leaderboardEntryPlaceElement);
-        leaderboardEntryElement.appendChild(leaderboardEntryNameElement);
-        leaderboardEntryElement.appendChild(leaderboardEntryScoreElement);
-        leaderboardElement.appendChild(leaderboardEntryElement);
-    });
-}
 
 //add entry function to add the name and score to the leaderboard
 function addEntry() {
     const name = document.getElementById('name').value;
-    const score = document.getElementById('score').value;
+    const score = parseInt(document.getElementById('score').value);
 
     const entry = {
         name: name,
@@ -501,9 +477,32 @@ function addEntry() {
     })
         .then(response => response.json())
         .then(data => {
-            updateLeaderboard(data);
+            const leaderboard = document.getElementById('leaderboard');
+            const leaderboardEntries = leaderboard.getElementsByTagName('li');
+            const newEntry = document.createElement('li');
+            newEntry.classList.add('leaderboard-entry');
+            newEntry.innerHTML = `<span class="leaderboard-entry-place">${data.place}</span>
+                              <span>${data.name}</span>
+                              <span>${data.score}</span>`;
+
+            // Insert the new entry into the leaderboard array and sort by score
+            const leaderboardArray = Array.from(leaderboardEntries);
+            leaderboardArray.push(newEntry);
+            leaderboardArray.sort((a, b) => {
+                const aScore = parseInt(a.getElementsByTagName('span')[2].textContent);
+                const bScore = parseInt(b.getElementsByTagName('span')[2].textContent);
+                return bScore - aScore;
+            });
+
+            // Update the leaderboard with the new array
+            leaderboard.innerHTML = '';
+            leaderboardArray.forEach(entry => leaderboard.appendChild(entry));
+
+            // Show confirmation message
+            alert(`Entry added: ${data.name} - ${data.score}`);
         })
         .catch(error => console.error(error));
 }
+
 
 
