@@ -2,23 +2,13 @@
   "entries": [
     {
       "id": 1,
-      "name": "Test",
-      "score": 20
+      "name": "Fioccosplat",
+      "score": 9001
     },
     {
       "name": "Papaya",
       "score": 80,
       "id": 2
-    },
-    {
-      "name": "noob",
-      "score": 40,
-      "id": 3
-    },
-    {
-      "name": "pp",
-      "score": 0,
-      "id": 4
     }
   ]
 }
