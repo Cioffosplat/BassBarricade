@@ -417,7 +417,8 @@ window.addEventListener('resize', function(){ //method used to correctly handle 
     canvasPosition = canvas.getBoundingClientRect();
 })
 
-function collision (first, second){//method used to make two objects collide
+//method used to make two objects collide
+function collision (first, second){
     if (    !( first.x > second.x + second.width || //horizontal collision check
                 first.x + first.width < second.x ||
                 first.y > second.y + second.height || //vertical collision check
@@ -426,6 +427,8 @@ function collision (first, second){//method used to make two objects collide
         return true;
     }
 }
+
+//Leaderboard function to create and update the leaderboard, even sorting the places
 function leaderboard() {
     fetch('leaderboard.json')
         .then(response => response.json())
@@ -459,6 +462,7 @@ function leaderboard() {
         });
 }
 
+//the add entry function fetches the json file to modify it by adding a new position with its score
 function addEntry() {
     const name = document.getElementById('name').value;
     const score = parseInt(document.getElementById('score').value);
@@ -496,20 +500,19 @@ function addEntry() {
                 return bScore - aScore;
             });
 
-            // Delete the last element if the leaderboard has more than 10 entries
-            if (leaderboardArray.length > 10) {
-                leaderboardArray.pop();
-            }
-
             // Update the leaderboard with the new array
             leaderboard.innerHTML = '';
-            leaderboardArray.forEach(entry => leaderboard.appendChild(entry));
+            leaderboardArray.slice(0, 10).forEach(entry => leaderboard.appendChild(entry));
 
-            // Show confirmation message
+            // Show confirmation message just for debugging
             alert(`Entry added: ${data.name} - ${data.score}`);
+
+            // Update the leaderboard by reloading the page
+            window.location.reload()
         })
         .catch(error => console.error(error));
 }
+
 
 
 
