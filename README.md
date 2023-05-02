@@ -18,3 +18,4 @@ Enjoy BassBarricade, made by Papaya/Fioccosplat
 
 Game GIF:
 
+![GameplayGif](https://user-images.githubusercontent.com/113895032/235605650-783fa4b9-fd8a-4b66-8d41-80282385cd85.gif)
