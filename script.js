@@ -429,7 +429,7 @@ function collision (first, second){//method used to make two objects collide
 
 //function/method used to read the JSON file and print i on the leaderboard
 function leaderboard(){
-    fetch('https://my-json-server.typicode.com/cioffosplat/BassBarricade/db')
+    fetch('leaderboard.json')
         .then(response => response.json())
         .then(data => {
             const leaderboardElement = document.getElementById('leaderboard');
@@ -468,7 +468,7 @@ function addEntry() {
         score: score
     };
 
-    fetch('https://my-json-server.typicode.com/cioffosplat/BassBarricade/db', {
+    fetch('http://localhost:3000/entries', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
