@@ -11,11 +11,13 @@ caused by no BackEnd implementation (this is a FrontEnd project with the use of 
 Game Link: https://cioffosplat.github.io/BassBarricade/index.html
 
 To make the software work correctly with the leaderboard:
-- Run the jsonServer.bat file
-- Open the index.html page on any Web-Browser of preference
+- If you don't have node, install it at https://nodejs.org/en/download
+- Run the nodeInstallJsonServer
+- After run the jsonServer.bat file
+- Lastly open the index.html page on any Web-Browser of preference
 
 Enjoy BassBarricade, made by Papaya/Fioccosplat
 
-Game GIF:
+Game/Gameplay GIF:
 
 ![GameplayGif](https://user-images.githubusercontent.com/113895032/235605650-783fa4b9-fd8a-4b66-8d41-80282385cd85.gif)
