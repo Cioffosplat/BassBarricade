@@ -2,15 +2,15 @@ const canvas = document.getElementById('canvas1'); //element used to connect the
 const ctx = canvas.getContext('2d'); //element used to use the 2d available methods of the canvas
 
 //JSON Server port to open the json file
-//json-server --watch C:\Users\cioff\OneDrive\Desktop\BassBarricade\leaderboard.json --port 3000
+//json-server --watch leaderboard.json --port 3000
+//or just use the jsonServer.bat file
 
 canvas.width = 900; //using here the same width and height as the html file to adjust the canvas correctly
 canvas.height = 600; // *** AJUST TO FIT ON THE SIDE OF THE SCREEN ***
 
-//global variables (just to make it a littile bit easier to read) will be declared here:
-const cellSize = 100;
-const cellGap = 3;
-
+//global variables (just to make it a little bit easier to read) will be declared here:
+const cellSize = 100;//single cell size for every block of the canvas
+const cellGap = 3;//gap used for the border of the canvas
 const gameGrid = []; //array used to store the canvas "cells" information and objects
 const defenders = []; //array used to store all the current defenders
 const enemies = []; //array used to store all the current enemies on the grid
@@ -19,16 +19,18 @@ const projectiles = []; //array used to store the various projectiles
 const resources = []; //array used to store all the resources
 const floatingMessages = []; //array used to store all the floating messages
 const enemyTypes = []; //array used to store all the different type of enemies
-const winningScore = 10000; //winning score used to let the game finish whenever the player gets to that value
+const winningScore = 10000; //winning score used to let the game finish whenever the player gets to that value now not used, just to make the game endless
 const startButton = document.getElementById('startButton');//constant for temporary start button
 const startScreen = document.getElementById('startScreen');//constant for temporary start screen
 const retryButton = document.getElementById('retryButton');//constant for the reset button
 const submitButton = document.getElementById('submit-button');//temporary submit button for the name and score
+const nameField = document.getElementById('name');//name field to insert the name at the end of the game
+const nameFieldText = document.getElementById('nameText')
 
-let enemiesInterval = 600; //variable used to control the "flow" of the enemies
-let numberOfResources = 300;
-let score = 0;
-let frame = 0;
+let enemiesInterval = 800; //variable used to control the "flow" of the enemies
+let numberOfResources = 100; //Number of player resources, the user starts with 100 just to plant one single defender
+let score = 0; //Score variable used to save the player's score
+let frame = 0; //variable for the game frame recognition
 let gameOver = false; //variable used to determine if the player has lost or not
 
 //MOUSE will be created and developed here:
@@ -98,12 +100,13 @@ class Projectile{
     update(){
         this.x += this.speed;
     }
-    draw(){ //FOR NOW it draws a small circle for the projectile
+    draw(){
+        //Old way that draws a small circle for the projectile
         //ctx.fillStyle = 'black'; //old small ball
         //ctx.beginPath();
         //ctx.arc(this.x, this.y, this.width,0,Math.PI * 2);
         //ctx.fill();
-        ctx.drawImage(bullet1, this.x, this.y,76,45);
+        ctx.drawImage(bullet1, this.x, this.y-25,60,45);
     }
 }
 function handleProjectiles(){ //handles all the individual projectiles
@@ -231,11 +234,13 @@ function handleFloatingMessages(){ //it will update and remove the messages on-s
     }
 }
 //ENEMIES development here:
-//ememy sprites and animations:
+//enemy sprites and animations:
 const enemySprites = [];
 const enemy1 = new Image();
 enemy1.src = 'sprites&assets/zombie.png';
 enemySprites.push(enemy1);
+
+//Implementation ready for multiple enemies
 //const enemy2 = new Image();
 //enemy2.src = 'sprites&assets/enemy/Flying-Enemy/eye monster idle.png';
 //enemyTypes.push(enemy2);
@@ -260,14 +265,57 @@ class Enemy  {
         this.spriteHeight = 410;
     }
     update(){ //updates the position of the enemy
+        let enemiesSpeed = score/100; //variable to control score with enemy speed change
         this.x -= this.movement;
         //animation part of the enemy sprites
         if (frame % 9 === 0){
             if (this.frameX < this.maxFrame) this.frameX++;
             else this.frameX = this.minFrame;
         }
+        //Speed variability of the enemies in context of the user's score
+        if(enemiesSpeed >= 1){
+            this.speed = Math.random() * 0.1 + 0.5;
+            this.movement = this.speed;
+        }
+        if(enemiesSpeed >= 2){
+            this.speed = Math.random() * 0.1 + 0.6;
+            this.movement = this.speed;
+        }
+        if(enemiesSpeed >= 3){
+            this.speed = Math.random() * 0.1 + 0.7;
+            this.movement = this.speed;
+        }
+        if(enemiesSpeed >= 4){
+            this.speed = Math.random() * 0.1 + 0.8;
+            this.movement = this.speed;
+        }
+        if(enemiesSpeed >= 5){
+            this.speed = Math.random() * 0.1 + 0.9;
+            this.movement = this.speed;
+        }
+        if(enemiesSpeed >= 6){
+            this.speed = Math.random() * 0.1 + 1;
+            this.movement = this.speed;
+        }
+        if(enemiesSpeed >= 7){
+            this.speed = Math.random() * 0.1 + 1.1;
+            this.movement = this.speed;
+        }
+        if(enemiesSpeed >= 8){
+            this.speed = Math.random() * 0.1 + 1.2;
+            this.movement = this.speed;
+        }
+        if(enemiesSpeed >= 9){
+            this.speed = Math.random() * 0.1 + 1.3;
+            this.movement = this.speed;
+        }
+        if(enemiesSpeed >= 10){
+            this.speed = Math.random() * 0.1 + 1.4;
+            this.movement = this.speed;
+        }
     }
     draw(){
+        //Initial way of displaying the enemies, used in early development
         //ctx.fillStyle = 'red'; //these were used to display rectangles instead of the sprites
         //ctx.fillRect(this.x, this.y, this.width, this.height);
 
@@ -309,7 +357,7 @@ function handleEnemies(){ //method to update and handle the ememies in the grid
     }
 }
 //RESOURCES development here:
-const amounts = [20,30,40]; // value used for descending resources
+const amounts = [20,30,40,50,60]; // value used for descending resources
 const resource = new Image();
 resource.src = 'sprites&assets/sun60.png';
 class Resource{
@@ -321,6 +369,7 @@ class Resource{
         this.amount = amounts[Math.floor(Math.random() * amounts.length)]; // method to assign a value of the resource randomly from the array of possible
     }
     draw(){
+        //old way to show the resources
         //ctx.fillStyle = 'yellow'; //old yellow rectangle
         //ctx.fillRect(this.x, this.y, this.width, this.height);
         ctx.drawImage(resource, this.x, this.y,60,60);
@@ -358,6 +407,8 @@ function handleGameStatus(){ // small method to display the available resources 
         ctx.fillText('You finished with ' + score + ' points', 324,380);
         // show the retry button
         retryButton.style.display = 'block';
+        nameField.style.display = 'block'
+        nameFieldText.style.display ='block';
     }
     if (score >= winningScore && enemies.length === 0){ //controls if the player has actually got the winning score
         ctx.fillStyle = 'black';
@@ -398,22 +449,28 @@ function animate(){ //function used to "re-draw" the element of the canvas makin
     frame++;
     if (!gameOver) requestAnimationFrame(animate); // method used to create an animation "loop" effect using recursion : )
 }
-//animate(); old way to animate the game without the button
+//Generates the Leaderboard everytime the page is refreshed
 leaderboard();
+
 //start and finish button functions
 startButton.addEventListener('click', () => {
     animate();
     startScreen.style.display = 'none';
 });
+
+//Assignments for the retryButton
 retryButton.addEventListener('click', () => {
-    // restart the game by reloading the page
+    // Restart the game by reloading the page
     location.reload();
-    // hide the retry button again
+    // Hide the retry button again
     retryButton.style.display = 'none';
+    //Used to add the player to the "hypothetical" leaderboard
+    addEntry();
 });
 submitButton.addEventListener('click', addEntry);
 
-window.addEventListener('resize', function(){ //method used to correctly handle the resize function of the web window
+//Method used to correctly handle the resize function of the web window
+window.addEventListener('resize', function(){
     canvasPosition = canvas.getBoundingClientRect();
 })
 
@@ -430,13 +487,15 @@ function collision (first, second){
 
 //Leaderboard function to create and update the leaderboard, even sorting the places
 function leaderboard() {
+    //JSON File that stores and updates the leaderboard, used to update the whole leaderboard
     fetch('leaderboard.json')
         .then(response => response.json())
         .then(data => {
             const leaderboardElement = document.getElementById('leaderboard');
+            //Small check used to sort the table using the correct order using the score
             const leaderboard = data.entries.sort((a, b) => b.score - a.score);
 
-            // Get the first 10 entries from the leaderboard
+            // Get used to make a top 10 leaderboard by displaying only the first 10 entries
             const topEntries = leaderboard.slice(0, 10);
 
             topEntries.forEach((entry, index) => {
@@ -465,15 +524,13 @@ function leaderboard() {
 //the add entry function fetches the json file to modify it by adding a new position with its score
 function addEntry() {
     const name = document.getElementById('name').value;
-    const score = parseInt(document.getElementById('score').value);
 
     const entry = {
         name: name,
         score: score
     };
 
-    //https://my-json-server.typicode.com/cioffosplat/BassBarricade/entries
-    //http://localhost:3000/entries
+    //Fetch File generated by the JSON Server, local server to save and modify the JSON File
     fetch('http://localhost:3000/entries', {
         method: 'POST',
         headers: {
@@ -512,6 +569,7 @@ function addEntry() {
         })
         .catch(error => console.error(error));
 }
+
 
 
 

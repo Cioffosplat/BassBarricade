@@ -181,7 +181,6 @@ body{
     font-size: 40px;
     padding: 10px;
     border: 6px black;
-    border: none;
     background-color: mediumpurple;
     color: gold;
     cursor: pointer;
@@ -190,5 +189,26 @@ body{
     width: 9%;
     height: 7%;
     left: 28%;
-    margin-top: 31.5%;
+    overflow: hidden;
+}
+
+/*Name field to enter you name to go on the leaderboard*/
+#name{
+    position: relative;
+    padding: 10px;
+    left: 32%;
+    margin-top: 37%;
+    overflow: hidden;
+}
+
+#nameText{
+    -webkit-text-stroke: 1px black;
+    position: relative;
+    font-family: 'Delicious Handrawn', cursive;
+    font-size: 32px;
+    color : gold;
+    left: 22%;
+    margin-bottom: 20px;
+    margin-top: -40px;
+    overflow: hidden;
 }

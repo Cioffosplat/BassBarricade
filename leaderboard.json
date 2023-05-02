@@ -2,73 +2,23 @@
   "entries": [
     {
       "id": 1,
-      "name": "Alice",
-      "score": 100
-    },
-    {
-      "id": 2,
-      "name": "Bob",
-      "score": 80
-    },
-    {
-      "id": 3,
-      "name": "Charlie",
-      "score": 60
-    },
-    {
-      "id": 4,
-      "name": "Dave",
-      "score": 40
-    },
-    {
-      "id": 5,
-      "name": "Eve",
+      "name": "Test",
       "score": 20
     },
     {
-      "id": 6,
-      "name": "Phillip",
-      "score": 120
+      "name": "Papaya",
+      "score": 80,
+      "id": 2
     },
     {
-      "id": 7,
-      "name": "Joseph",
-      "score": 69
-    },
-    {
-      "id": 8,
-      "name": "Roy",
-      "score": 400
+      "name": "noob",
+      "score": 40,
+      "id": 3
     },
     {
       "name": "pp",
-      "score": 500,
-      "id": 9
-    },
-    {
-      "name": "caca",
-      "score": 600,
-      "id": 10
-    },
-    {
-      "name": "pupu",
-      "score": 700,
-      "id": 11
-    },
-    {
-      "name": "susu",
-      "score": 800,
-      "id": 12
-    },
-    {
-      "name": "sussy baka",
-      "score": 342,
-      "id": 13
-    },
-    {
-      "name": "sussy baka",
-      "score": 900,
-      "id": 14
+      "score": 0,
+      "id": 4
     }
   ]
 }
