@@ -4,6 +4,7 @@ body{
     background-size: 100000% 100000%;
     animation: gradient 10s ease infinite;
     zoom: 100%;
+    overflow: hidden;
 }
 
 #canvas1{
@@ -168,11 +169,14 @@ body{
     font-size: 40px;
     padding: 35px;
     border: none;
-    background-color: mediumpurple;
+    background-color: black;
     color: gold;
     cursor: pointer;
     border-radius: 60px;
     -webkit-text-stroke: 2px black;
+}
+#startButton:hover{
+    background-color: mediumpurple;
 }
 
 #retryButton {
@@ -181,7 +185,7 @@ body{
     font-size: 40px;
     padding: 10px;
     border: 6px black;
-    background-color: mediumpurple;
+    background-color: black;
     color: gold;
     cursor: pointer;
     border-radius: 60px;
@@ -192,6 +196,10 @@ body{
     overflow: hidden;
 }
 
+#retryButton:hover {
+    background-color: mediumpurple;
+}
+
 /*Name field to enter you name to go on the leaderboard*/
 #name{
     position: relative;
@@ -199,6 +207,18 @@ body{
     left: 32%;
     margin-top: 37%;
     overflow: hidden;
+    background-color: black;
+    border: none;
+    color: white;
+    border-radius: 5px;
+}
+
+#name::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+#name:focus {
+    outline: none;
 }
 
 #nameText{

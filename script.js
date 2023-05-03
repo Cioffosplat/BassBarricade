@@ -94,8 +94,8 @@ class Projectile{
         this.y = y;
         this.width = 10;
         this.height = 10;
-        this.power = 20; //determines the power of the projectile, so how much damage it inflicts
-        this.speed = 6; //speed at which the projectile runs
+        this.power = 10; //determines the power of the projectile, so how much damage it inflicts
+        this.speed = 5; //speed at which the projectile runs
     }
     update(){
         this.x += this.speed;
@@ -141,7 +141,7 @@ class Defender{
         this.width = cellSize - cellGap * 2;
         this.height = cellSize - cellGap * 2;
         this.shooting = false; //shooting used when an enemy is detected
-        this.health = 100; //defender's health
+        this.health = 80; //defender's health
         this.projectiles = []; // used to store the specific projectile used by the defender
         this.timer = 0; //defines the "shooting rate" of the defender
         this.frameX = 0;
@@ -357,7 +357,7 @@ function handleEnemies(){ //method to update and handle the ememies in the grid
     }
 }
 //RESOURCES development here:
-const amounts = [20,30,40,50,60]; // value used for descending resources
+const amounts = [20,30,40,50]; // value used for descending resources
 const resource = new Image();
 resource.src = 'sprites&assets/sun60.png';
 class Resource{
@@ -524,7 +524,6 @@ function leaderboard() {
 //the add entry function fetches the json file to modify it by adding a new position with its score
 function addEntry() {
     const name = document.getElementById('name').value;
-
     const entry = {
         name: name,
         score: score
@@ -560,9 +559,6 @@ function addEntry() {
             // Update the leaderboard with the new array
             leaderboard.innerHTML = '';
             leaderboardArray.slice(0, 10).forEach(entry => leaderboard.appendChild(entry));
-
-            // Show confirmation message just for debugging
-            alert(`Entry added: ${data.name} - ${data.score}`);
 
             // Update the leaderboard by reloading the page
             window.location.reload()
