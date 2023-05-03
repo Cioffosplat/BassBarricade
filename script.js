@@ -24,8 +24,7 @@ const startButton = document.getElementById('startButton');//constant for tempor
 const startScreen = document.getElementById('startScreen');//constant for temporary start screen
 const retryButton = document.getElementById('retryButton');//constant for the reset button
 const submitButton = document.getElementById('submit-button');//temporary submit button for the name and score
-const nameField = document.getElementById('name');//name field to insert the name at the end of the game
-const nameFieldText = document.getElementById('nameText')
+const retryScreen = document.getElementById('retryScreen');//retry screen
 
 let enemiesInterval = 800; //variable used to control the "flow" of the enemies
 let numberOfResources = 100; //Number of player resources, the user starts with 100 just to plant one single defender
@@ -406,9 +405,7 @@ function handleGameStatus(){ // small method to display the available resources 
         ctx.font = '30px Delicious Handrawn';
         ctx.fillText('You finished with ' + score + ' points', 324,380);
         // show the retry button
-        retryButton.style.display = 'block';
-        nameField.style.display = 'block'
-        nameFieldText.style.display ='block';
+        retryScreen.style.display = 'block';
     }
     if (score >= winningScore && enemies.length === 0){ //controls if the player has actually got the winning score
         ctx.fillStyle = 'black';
