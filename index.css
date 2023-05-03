@@ -232,3 +232,31 @@ body{
     margin-top: -40px;
     overflow: hidden;
 }
+
+/*fotter styling*/
+footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+/* add some padding to the footer to create some space between the content and the edge of the viewport */
+.footer-container {
+    padding: 15px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.3);
+    border-radius: 25px;
+    margin-bottom: 5px;
+}
+
+/* style the images */
+.footer-container img {
+    height: 80px; /* set the height to a fixed value */
+    width: auto; /* let the width adjust automatically */
+    display: inline-block;
+    margin-right: 10px;
+}
+
