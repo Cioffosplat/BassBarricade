@@ -481,7 +481,7 @@ function collision (first, second){
 //Leaderboard function to create and update the leaderboard, even sorting the places
 function leaderboard() {
     //JSON File that stores and updates the leaderboard, used to update the whole leaderboard
-    fetch('https://cioffosplat.github.io/BassBarricade/leaderboard.json')
+    fetch('leaderboard.json')
         .then(response => response.json())
         .then(data => {
             const leaderboardElement = document.getElementById('leaderboard');
