@@ -1,10 +1,6 @@
 const canvas = document.getElementById('canvas1'); //element used to connect the html canvas to a javascript version of the canvas
 const ctx = canvas.getContext('2d'); //element used to use the 2d available methods of the canvas
 
-//JSON Server port to open the json file
-//json-server --watch leaderboard.json --port 3000
-//or just use the jsonServer.bat file
-
 canvas.width = 900; //using here the same width and height as the html file to adjust the canvas correctly
 canvas.height = 600; // *** AJUST TO FIT ON THE SIDE OF THE SCREEN ***
 
