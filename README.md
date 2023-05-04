@@ -1,5 +1,5 @@
 # BassBarricade (Tower Defence Game)
-<img width="688" alt="image" src="https://user-images.githubusercontent.com/113895032/235597157-d0a3c360-2647-4600-94eb-5721569d8a99.png">
+<img width="680" alt="image" src="https://user-images.githubusercontent.com/113895032/236176488-138a710c-4c32-4a70-8372-ea07f3d06eee.png">
 
 This is a small school project of a little Tower defence style game, 
 very similar to one of the most famous games in the Tower Defence world: Plants Vs Zombies.
@@ -19,6 +19,4 @@ To make the software work correctly with the leaderboard:
 Enjoy BassBarricade, made by Papaya/Fioccosplat
 
 Game/Gameplay GIF:
-
-![GameplayGif](https://user-images.githubusercontent.com/113895032/235797642-bbfc1501-72ed-48ff-89d7-05a4a3a01647.gif)
-
+![GameplayClip](https://user-images.githubusercontent.com/113895032/236181103-4c37e209-b060-4261-9deb-af0394cbf69a.gif)
