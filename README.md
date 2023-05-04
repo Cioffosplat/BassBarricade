@@ -19,7 +19,4 @@ To make the software work correctly with the leaderboard:
 Enjoy BassBarricade, made by Papaya/Fioccosplat
 
 Game/Gameplay GIF:
-
-![GameplayGif](https://user-images.githubusercontent.com/113895032/236177593-4cc5ccdf-bc51-48b9-8e34-bbe642255459.gif)
-
-
+![GameplayClip](https://user-images.githubusercontent.com/113895032/236181103-4c37e209-b060-4261-9deb-af0394cbf69a.gif)
