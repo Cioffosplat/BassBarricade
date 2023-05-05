@@ -12,8 +12,14 @@ Game Link: https://cioffosplat.github.io/BassBarricade/index.html
 
 To make the software work correctly with the leaderboard:
 - If you don't have node, install it at https://nodejs.org/en/download
-- Run the nodeInstallJsonServer
-- After run the jsonServer.bat file
+- Run the nodeInstallJsonServer or type in the Command Prompt:
+```sh
+npm install -g json-server
+```
+- After run the jsonServer.bat file or run in the Command Prompt:
+```sh
+json-server --watch leaderboard.json --port 3000
+```
 - Lastly open the index.html page on any Web-Browser of preference
 
 Enjoy BassBarricade, made by Papaya/Fioccosplat
