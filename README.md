@@ -10,7 +10,10 @@ I can possibly develop with my skillset.
 
 The game works on a browser and is saved in GitHub Pages, but without leaderboard interaction 
 caused by no BackEnd implementation (this is a FrontEnd project with the use of JSON). 
-Game Link: https://cioffosplat.github.io/BassBarricade/index.html
+Game Link: 
+```sh
+https://cioffosplat.github.io/BassBarricade/index.html
+```
 
 To make the software work correctly with the leaderboard:
 - If you don't have node, install it at https://nodejs.org/en/download
