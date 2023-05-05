@@ -1,7 +1,5 @@
 # BassBarricade (Tower Defence Game)
-<img alt="GitHub top language" src="https://img.shields.io/github/languages/top/Cioffosplat/BassBarricade">
-<img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/Cioffosplat/BassBarricade">
-<img alt="GitHub Licence" src="https://img.shields.io/github/license/Cioffosplat/BassBarricade">
+<img alt="GitHub top language" src="https://img.shields.io/github/languages/top/Cioffosplat/BassBarricade"> <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/Cioffosplat/BassBarricade"> <img alt="GitHub Licence" src="https://img.shields.io/github/license/Cioffosplat/BassBarricade">
 
 <img width="680" alt="image" src="https://user-images.githubusercontent.com/113895032/236176488-138a710c-4c32-4a70-8372-ea07f3d06eee.png">
 
