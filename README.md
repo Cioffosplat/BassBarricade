@@ -1,5 +1,5 @@
 # BassBarricade (Tower Defence Game)
-/github/languages/top/cioffosplat/BassBarricade
+https://img.shields.io/github/languages/top/cioffosplat/BassBarricade
 <img width="680" alt="image" src="https://user-images.githubusercontent.com/113895032/236176488-138a710c-4c32-4a70-8372-ea07f3d06eee.png">
 
 This is a small school project of a little Tower defence style game, 
