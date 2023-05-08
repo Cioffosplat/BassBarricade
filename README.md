@@ -25,7 +25,7 @@ npm install -g json-server
 ```sh
 json-server --watch leaderboard.json --port 3000
 ```
-- Lastly open the index.html page on any Web-Browser of preference
+- Lastly open the index.html page on any IDE of preference or any web-browser
 
 Enjoy BassBarricade, made by Papaya/Fioccosplat
 
